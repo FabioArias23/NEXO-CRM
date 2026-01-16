@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Martin Fernandez",
+      "email": "martin@nexo.com",
+      "role": "Super Admin",
+      "status": "Activo",
+      "lastActive": "Ahora"
+    },
+    {
+      "id": "2",
+      "name": "Laura Gómez",
+      "email": "laura@nexo.com",
+      "role": "Socio Gerente",
+      "status": "Activo",
+      "lastActive": "Hace 1h"
+    },
+    {
+      "id": "3",
+      "name": "Carlos Ruiz",
+      "email": "carlos@nexo.com",
+      "role": "Consultor",
+      "status": "Pendiente",
+      "lastActive": "-"
+    }
+  ]
+}

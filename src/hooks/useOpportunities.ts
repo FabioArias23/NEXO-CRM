@@ -1,150 +1,83 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
-
-export interface Opportunity {
-  id: string;
-  name: string;
-  value: number;
-  stage: string;
-  company: string;
-  contact: string;
-  probability: number;
-  closeDate: string;
-  description?: string;
-  ownerId: string;
-  ownerEmail: string;
-  ownerName: string;
-  lastModifiedBy: string;
-  lastModifiedByEmail: string;
-  lastModifiedByName: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { opportunitiesService } from "../services/opportunities.service";
+import { Opportunity } from "../core/types";
 
 export function useOpportunities() {
-  const { accessToken } = useAuth();
+  const { user } = useAuth();
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchOpportunities = useCallback(async () => {
-    if (!accessToken) return;
+    if (!user) return;
 
     try {
       setLoading(true);
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-1db75c60/opportunities`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Error al cargar oportunidades');
-      }
-
-      const data = await response.json();
-      setOpportunities(data.opportunities || []);
       setError(null);
+      const data = await opportunitiesService.getAll(user.id);
+      setOpportunities(data);
     } catch (err: any) {
-      console.error('Error fetching opportunities:', err);
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [accessToken]);
+  }, [user?.id]);
 
   useEffect(() => {
     fetchOpportunities();
-  }, [fetchOpportunities]);
-
-  const createOpportunity = async (opportunity: Partial<Opportunity>) => {
-    if (!accessToken) return;
-
-    try {
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-1db75c60/opportunities`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify(opportunity),
+    if (!user) return;
+    const unsubscribe = opportunitiesService.onChanges(user.id, (opp) => {
+      setOpportunities((prev) => {
+        const idx = prev.findIndex((o) => o.id === opp.id);
+        if (idx > -1) {
+          prev[idx] = opp;
+          return [...prev];
         }
-      );
+        return [opp, ...prev];
+      });
+    });
 
-      if (!response.ok) {
-        throw new Error('Error al crear oportunidad');
-      }
+    return unsubscribe;
+  }, [user?.id, fetchOpportunities]);
 
-      const data = await response.json();
-      setOpportunities([...opportunities, data.opportunity]);
-      return data.opportunity;
-    } catch (err: any) {
-      console.error('Error creating opportunity:', err);
-      throw err;
-    }
-  };
+  const createOpportunity = useCallback(
+    async (
+      data: Omit<
+        Opportunity,
+        | "id"
+        | "created_at"
+        | "updated_at"
+        | "owner_id"
+        | "last_modified_by"
+        | "owner"
+        | "modifier"
+      >,
+    ) => {
+      if (!user) throw new Error("Usuario no autenticado");
 
-  const updateOpportunity = async (id: string, updates: Partial<Opportunity>) => {
-    if (!accessToken) return;
+      const opp = await opportunitiesService.create(user.id, data);
+      setOpportunities((prev) => [opp, ...prev]);
+      return opp;
+    },
+    [user],
+  );
 
-    try {
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-1db75c60/opportunities/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify(updates),
-        }
-      );
+  const updateOpportunity = useCallback(
+    async (id: string, updates: Partial<Opportunity>) => {
+      if (!user) throw new Error("Usuario no autenticado");
 
-      if (!response.ok) {
-        throw new Error('Error al actualizar oportunidad');
-      }
+      const opp = await opportunitiesService.update(id, user.id, updates);
+      setOpportunities((prev) => prev.map((o) => (o.id === id ? opp : o)));
+      return opp;
+    },
+    [user],
+  );
 
-      const data = await response.json();
-      setOpportunities(
-        opportunities.map((opp) => (opp.id === id ? data.opportunity : opp))
-      );
-      return data.opportunity;
-    } catch (err: any) {
-      console.error('Error updating opportunity:', err);
-      throw err;
-    }
-  };
-
-  const deleteOpportunity = async (id: string) => {
-    if (!accessToken) return;
-
-    try {
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-1db75c60/opportunities/${id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Error al eliminar oportunidad');
-      }
-
-      setOpportunities(opportunities.filter((opp) => opp.id !== id));
-    } catch (err: any) {
-      console.error('Error deleting opportunity:', err);
-      throw err;
-    }
-  };
+  const deleteOpportunity = useCallback(async (id: string) => {
+    await opportunitiesService.delete(id);
+    setOpportunities((prev) => prev.filter((o) => o.id !== id));
+  }, []);
 
   return {
     opportunities,

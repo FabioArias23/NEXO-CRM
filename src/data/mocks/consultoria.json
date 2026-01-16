@@ -1,0 +1,81 @@
+{
+  "clients": [
+    {
+      "id": 1,
+      "fechaCarga": "2025-12-02",
+      "caller": "Juan",
+      "derivados": "",
+      "razonSocial": "PREVENCION ART",
+      "contacto": "AGUILERA CLAUDIA",
+      "tel1": "1155000012",
+      "status": "Contactar Luego",
+      "observaciones": "Interesado en cotización básica."
+    },
+    {
+      "id": 2,
+      "fechaCarga": "2025-02-12",
+      "caller": "Juan",
+      "derivados": "Si",
+      "razonSocial": "OMINT ART",
+      "contacto": "MELANY MORRO",
+      "tel1": "11 15-7105-4844",
+      "status": "Contactar Luego",
+      "observaciones": "Llamar después de las 14hs."
+    },
+    {
+      "id": 3,
+      "fechaCarga": "2025-12-04",
+      "caller": "Juan",
+      "derivados": "",
+      "razonSocial": "EXPERTA ART",
+      "contacto": "GIMENEZ BRIAN",
+      "tel1": "1166319605",
+      "status": "Nuevo",
+      "observaciones": ""
+    },
+    {
+      "id": 4,
+      "fechaCarga": "2025-12-10",
+      "caller": "Florencia",
+      "derivados": "",
+      "razonSocial": "FEDERACION PATRONAL",
+      "contacto": "CHAVEZ NAHUEL",
+      "tel1": "011 15 7151-9007",
+      "status": "Nuevo",
+      "observaciones": "Preguntar por gerente de RRHH."
+    },
+    {
+      "id": 5,
+      "fechaCarga": "2025-12-23",
+      "caller": "Cecilia",
+      "derivados": "",
+      "razonSocial": "ANDINA ART",
+      "contacto": "ALONSO LUCAS",
+      "tel1": "1130521890",
+      "status": "Cerrado",
+      "observaciones": "Venta cerrada exitosamente."
+    },
+    {
+      "id": 6,
+      "fechaCarga": "2025-12-17",
+      "caller": "Juan",
+      "derivados": "No",
+      "razonSocial": "PREVENCION ART",
+      "contacto": "LEGUIZA ENZO",
+      "tel1": "11-76245483",
+      "status": "Contactado",
+      "observaciones": "Enviado email con propuesta."
+    },
+    {
+      "id": 7,
+      "fechaCarga": "2025-12-22",
+      "caller": "Miriam",
+      "derivados": "Si",
+      "razonSocial": "FEDERACION PATRONAL",
+      "contacto": "CASTAÑO BRAIAN",
+      "tel1": "+54 9 11 2489 7373",
+      "status": "Contactar Luego",
+      "observaciones": ""
+    }
+  ]
+}

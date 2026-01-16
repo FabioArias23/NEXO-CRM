@@ -1,22 +1,22 @@
-import { NavLink, useNavigate } from 'react-router';
-import { useAuth } from '../../contexts/AuthContext';
-import { 
-  LayoutDashboard, 
-  Table2, 
+import { NavLink, useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import {
+  LayoutDashboard,
+  Table2,
   Columns3,
   LogOut,
-  ShieldCheck, 
-  FileText,    
+  ShieldCheck,
+  FileText,
   Users,
   ArrowLeft,
-  Settings
-} from 'lucide-react';
+  Settings,
+} from "lucide-react";
 
 const navigation = [
-  { name: 'Dashboard Global', to: '/base/dashboard', icon: LayoutDashboard },
-  { name: 'Base de Clientes', to: '/base/table', icon: Users }, 
-  { name: 'Pólizas Activas', to: '/base/policies', icon: FileText },
-  { name: 'Siniestros (Kanban)', to: '/base/kanban', icon: Columns3 },
+  { name: "Dashboard Global", to: "/base/dashboard", icon: LayoutDashboard },
+  { name: "Base de Clientes", to: "/base/table", icon: Users },
+  { name: "Pólizas Activas", to: "/base/policies", icon: FileText },
+  { name: "Siniestros (Kanban)", to: "/base/kanban", icon: Columns3 },
 ];
 
 export function Sidebar() {
@@ -25,11 +25,10 @@ export function Sidebar() {
 
   return (
     <div className="w-64 bg-background border-r border-border flex flex-col h-screen flex-shrink-0 z-20 relative transition-colors duration-300">
-      
       {/* BOTÓN VOLVER AL LOBBY */}
       <div className="px-4 pt-4">
-        <button 
-          onClick={() => navigate('/')}
+        <button
+          onClick={() => navigate("/")}
           className="group flex items-center gap-2 text-[10px] uppercase font-bold tracking-wider text-muted-foreground hover:text-foreground transition-colors"
         >
           <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
@@ -41,58 +40,66 @@ export function Sidebar() {
       <div className="p-6 pb-4 border-b border-border bg-background transition-colors duration-300">
         <div className="flex items-center gap-3">
           {/* Logo invierte colores según el tema: Fondo negro/icono blanco en Light, Fondo blanco/icono negro en Dark */}
-          <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center shadow-sm">
+          <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center shadow-sm shrink-0">
             <ShieldCheck className="w-6 h-6 text-background" />
           </div>
-          <div>
-            <h1 className="text-sm font-bold text-foreground tracking-wider">NEXO CRM</h1>
-            <p className="text-[10px] text-muted-foreground font-medium tracking-[0.2em] uppercase">Enterprise</p>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-xs font-bold text-foreground tracking-tight">
+              NEXO CRM
+            </h2>
+            <p className="text-[10px] text-muted-foreground font-medium tracking-[0.2em] uppercase truncate">
+              Enterprise
+            </p>
           </div>
         </div>
       </div>
 
       {/* NAVEGACIÓN */}
-      <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
-        <p className="px-3 mb-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+      <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        <p className="px-2 mb-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
           Gestión Operativa
         </p>
-        
+
         {navigation.map((item) => (
           <NavLink
             key={item.name}
             to={item.to}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group ${
+              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
                 isActive
-                  ? 'bg-primary text-primary-foreground shadow-md' // Estilo activo
-                  : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' // Estilo inactivo
+                  ? "bg-primary text-primary-foreground shadow-sm" // Estilo activo
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground" // Estilo inactivo
               }`
             }
           >
-            <item.icon className="w-4 h-4 transition-transform group-hover:scale-105" />
-            <span>{item.name}</span>
+            <div className="w-5 h-5 flex items-center justify-center shrink-0">
+              <item.icon className="w-[18px] h-[18px] transition-transform group-hover:scale-110" />
+            </div>
+            <span className="truncate flex-1">{item.name}</span>
           </NavLink>
         ))}
 
         {/* Sección Admin */}
         {isAdmin && (
           <>
-            <div className="my-4 border-t border-border mx-3" />
-            <p className="px-3 mb-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+            <div className="my-4 border-t border-border mx-2" />
+            <p className="px-2 mb-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
               Configuración
             </p>
             <NavLink
               to="/base/analytics"
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  isActive 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
+                  isActive
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                 }`
               }
             >
-              <Settings className="w-4 h-4" />
-              <span>Analíticas Admin</span>
+              <div className="w-5 h-5 flex items-center justify-center shrink-0">
+                <Settings className="w-[18px] h-[18px] transition-transform group-hover:scale-110" />
+              </div>
+              <span className="truncate flex-1">Analíticas Admin</span>
             </NavLink>
           </>
         )}
@@ -101,16 +108,20 @@ export function Sidebar() {
       {/* FOOTER USUARIO */}
       <div className="p-4 border-t border-border bg-background transition-colors duration-300">
         <div className="p-3 rounded-xl bg-card border border-border mb-3 hover:border-input transition-colors shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-gray-700 to-gray-500 flex items-center justify-center text-white font-bold text-xs ring-2 ring-background">
-              {user?.name?.charAt(0) || 'U'}
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-gray-700 to-gray-500 flex items-center justify-center text-white font-bold text-xs ring-2 ring-background shrink-0">
+              {user?.name?.charAt(0) || "U"}
             </div>
-            <div className="overflow-hidden flex-1">
-              <p className="text-sm text-foreground font-medium truncate">{user?.name}</p>
+            <div className="overflow-hidden flex-1 min-w-0">
+              <p className="text-sm text-foreground font-medium truncate">
+                {user?.name}
+              </p>
               <div className="flex items-center gap-1.5">
-                <div className={`w-1.5 h-1.5 rounded-full ${isAdmin ? 'bg-purple-500' : 'bg-green-500'}`}></div>
+                <div
+                  className={`w-1.5 h-1.5 rounded-full shrink-0 ${isAdmin ? "bg-purple-500" : "bg-green-500"}`}
+                ></div>
                 <p className="text-[10px] text-muted-foreground truncate uppercase tracking-wide">
-                  {isAdmin ? 'Administrador' : 'Consultor'}
+                  {isAdmin ? "Administrador" : "Consultor"}
                 </p>
               </div>
             </div>
@@ -121,8 +132,8 @@ export function Sidebar() {
           onClick={() => signOut()}
           className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-bold text-destructive hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors border border-transparent hover:border-destructive/20"
         >
-          <LogOut className="w-3.5 h-3.5" />
-          <span>CERRAR SESIÓN</span>
+          <LogOut className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">CERRAR SESIÓN</span>
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { X, Trash2, Loader2, User, Clock, AlertTriangle } from 'lucide-react';
-import { useOpportunities, Opportunity } from '../../hooks/useOpportunities';
+import { useState } from "react";
+import { X, Trash2, Loader2, User, Clock, AlertTriangle } from "lucide-react";
+import { useOpportunities } from "../../hooks/useOpportunities";
+import { Opportunity } from "../../core/types";
 
 interface OpportunityModalProps {
   opportunity?: Opportunity;
@@ -8,28 +9,33 @@ interface OpportunityModalProps {
 }
 
 const stages = [
-  'Prospecto',
-  'Calificado',
-  'Propuesta',
-  'Negociación',
-  'Cerrado Ganado',
-  'Cerrado Perdido'
+  "Prospecto",
+  "Calificado",
+  "Propuesta",
+  "Negociación",
+  "Cerrado Ganado",
+  "Cerrado Perdido",
 ];
 
-export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps) {
-  const { createOpportunity, updateOpportunity, deleteOpportunity } = useOpportunities();
+export function OpportunityModal({
+  opportunity,
+  onClose,
+}: OpportunityModalProps) {
+  const { createOpportunity, updateOpportunity, deleteOpportunity } =
+    useOpportunities();
   const [loading, setLoading] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: opportunity?.name || '',
-    company: opportunity?.company || '',
-    contact: opportunity?.contact || '',
+    name: opportunity?.name || "",
+    company: opportunity?.company || "",
+    contact: opportunity?.contact || "",
     value: opportunity?.value || 0,
-    stage: opportunity?.stage || 'Prospecto',
+    stage: opportunity?.stage || "Prospecto",
     probability: opportunity?.probability || 30,
-    closeDate: opportunity?.closeDate || new Date().toISOString().split('T')[0],
-    description: opportunity?.description || '',
+    close_date:
+      opportunity?.close_date || new Date().toISOString().split("T")[0],
+    description: opportunity?.description || "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,7 +50,7 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
       }
       onClose();
     } catch (error) {
-      console.error('Error saving opportunity:', error);
+      console.error("Error saving opportunity:", error);
     } finally {
       setLoading(false);
     }
@@ -52,25 +58,25 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
 
   const handleDelete = async () => {
     if (!opportunity) return;
-    
+
     setLoading(true);
     try {
       await deleteOpportunity(opportunity.id);
       onClose();
     } catch (error) {
-      console.error('Error deleting opportunity:', error);
+      console.error("Error deleting opportunity:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    return new Date(dateString).toLocaleString("es-ES", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -79,7 +85,7 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
       <div className="bg-gray-950 border border-gray-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-900">
           <h2 className="text-xl text-white">
-            {opportunity ? 'Editar Oportunidad' : 'Nueva Oportunidad'}
+            {opportunity ? "Editar Oportunidad" : "Nueva Oportunidad"}
           </h2>
           <button
             onClick={onClose}
@@ -99,7 +105,9 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-gray-600"
                   placeholder="Ej: Servicio Premium Anual"
                   required
@@ -113,7 +121,9 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
                 <input
                   type="text"
                   value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, company: e.target.value })
+                  }
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-gray-600"
                   placeholder="Nombre de la empresa"
                   required
@@ -127,7 +137,9 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
                 <input
                   type="text"
                   value={formData.contact}
-                  onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, contact: e.target.value })
+                  }
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-gray-600"
                   placeholder="Nombre del contacto"
                   required
@@ -141,7 +153,9 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
                 <input
                   type="number"
                   value={formData.value}
-                  onChange={(e) => setFormData({ ...formData, value: Number(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, value: Number(e.target.value) })
+                  }
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-gray-600"
                   placeholder="0"
                   min="0"
@@ -155,7 +169,12 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
                 </label>
                 <select
                   value={formData.stage}
-                  onChange={(e) => setFormData({ ...formData, stage: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      stage: e.target.value as typeof formData.stage,
+                    })
+                  }
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white focus:outline-none focus:border-gray-600"
                   required
                 >
@@ -174,7 +193,12 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
                 <input
                   type="number"
                   value={formData.probability}
-                  onChange={(e) => setFormData({ ...formData, probability: Number(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      probability: Number(e.target.value),
+                    })
+                  }
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-gray-600"
                   min="0"
                   max="100"
@@ -187,8 +211,10 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
                 </label>
                 <input
                   type="date"
-                  value={formData.closeDate}
-                  onChange={(e) => setFormData({ ...formData, closeDate: e.target.value })}
+                  value={formData.close_date}
+                  onChange={(e) =>
+                    setFormData({ ...formData, close_date: e.target.value })
+                  }
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white focus:outline-none focus:border-gray-600"
                 />
               </div>
@@ -199,7 +225,9 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
                 </label>
                 <textarea
                   value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-gray-600 resize-none"
                   rows={3}
                   placeholder="Información adicional sobre la oportunidad..."
@@ -209,25 +237,43 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
 
             {opportunity && (
               <div className="pt-6 border-t border-gray-900">
-                <h3 className="text-sm text-gray-400 mb-4">Información de Auditoría</h3>
+                <h3 className="text-sm text-gray-400 mb-4">
+                  Información de Auditoría
+                </h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3 p-3 bg-black rounded-lg border border-gray-900">
                     <User className="w-5 h-5 text-gray-500 mt-0.5" />
                     <div className="flex-1">
-                      <p className="text-xs text-gray-500 mb-1">Propietario Original</p>
-                      <p className="text-sm text-white">{opportunity.ownerName}</p>
-                      <p className="text-xs text-gray-600">{opportunity.ownerEmail}</p>
-                      <p className="text-xs text-gray-700 mt-1">ID: {opportunity.ownerId.slice(0, 12)}...</p>
+                      <p className="text-xs text-gray-500 mb-1">
+                        Propietario Original
+                      </p>
+                      <p className="text-sm text-white">
+                        {opportunity.owner?.name || "N/A"}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        {opportunity.owner?.email || "N/A"}
+                      </p>
+                      <p className="text-xs text-gray-700 mt-1">
+                        ID: {opportunity.owner_id.slice(0, 12)}...
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3 p-3 bg-black rounded-lg border border-gray-900">
                     <Clock className="w-5 h-5 text-gray-500 mt-0.5" />
                     <div className="flex-1">
-                      <p className="text-xs text-gray-500 mb-1">Última Modificación</p>
-                      <p className="text-sm text-white">{opportunity.lastModifiedByName}</p>
-                      <p className="text-xs text-gray-600">{opportunity.lastModifiedByEmail}</p>
-                      <p className="text-xs text-gray-600 mt-1">{formatDate(opportunity.updatedAt)}</p>
+                      <p className="text-xs text-gray-500 mb-1">
+                        Última Modificación
+                      </p>
+                      <p className="text-sm text-white">
+                        {opportunity.modifier?.name || "N/A"}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        {opportunity.modifier?.email || "N/A"}
+                      </p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        {formatDate(opportunity.updated_at)}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -276,9 +322,12 @@ export function OpportunityModal({ opportunity, onClose }: OpportunityModalProps
               <div className="flex items-start gap-3 mb-4">
                 <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5" />
                 <div className="flex-1">
-                  <p className="text-sm text-white mb-1">¿Confirmar eliminación?</p>
+                  <p className="text-sm text-white mb-1">
+                    ¿Confirmar eliminación?
+                  </p>
                   <p className="text-xs text-gray-400">
-                    Esta acción no se puede deshacer. La oportunidad será eliminada permanentemente.
+                    Esta acción no se puede deshacer. La oportunidad será
+                    eliminada permanentemente.
                   </p>
                 </div>
               </div>

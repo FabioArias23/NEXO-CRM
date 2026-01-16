@@ -1,31 +1,36 @@
-import { useMemo } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { Opportunity } from '../../hooks/useOpportunities';
+import { useMemo } from "react";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { Opportunity } from "../../core/types";
 
 interface PipelineDistributionProps {
   opportunities: Opportunity[];
 }
 
 const STAGE_COLORS: Record<string, string> = {
-  'Prospecto': '#e5e7eb',
-  'Calificado': '#d1d5db',
-  'Propuesta': '#9ca3af',
-  'Negociación': '#6b7280',
-  'Cerrado Ganado': '#ffffff',
-  'Cerrado Perdido': '#4b5563',
+  Prospecto: "#e5e7eb",
+  Calificado: "#d1d5db",
+  Propuesta: "#9ca3af",
+  Negociación: "#6b7280",
+  "Cerrado Ganado": "#ffffff",
+  "Cerrado Perdido": "#4b5563",
 };
 
-export function PipelineDistribution({ opportunities }: PipelineDistributionProps) {
+export function PipelineDistribution({
+  opportunities,
+}: PipelineDistributionProps) {
   const chartData = useMemo(() => {
-    const stageCounts = opportunities.reduce((acc, opp) => {
-      acc[opp.stage] = (acc[opp.stage] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const stageCounts = opportunities.reduce(
+      (acc, opp) => {
+        acc[opp.stage] = (acc[opp.stage] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     return Object.entries(stageCounts).map(([name, value]) => ({
       name,
       value,
-      color: STAGE_COLORS[name] || '#9ca3af',
+      color: STAGE_COLORS[name] || "#9ca3af",
     }));
   }, [opportunities]);
 
@@ -54,13 +59,13 @@ export function PipelineDistribution({ opportunities }: PipelineDistributionProp
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#111827',
-                    border: '1px solid #374151',
-                    borderRadius: '8px',
-                    fontSize: '12px',
-                    color: '#fff'
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#111827",
+                    border: "1px solid #374151",
+                    borderRadius: "8px",
+                    fontSize: "12px",
+                    color: "#fff",
                   }}
                 />
               </PieChart>
@@ -69,10 +74,13 @@ export function PipelineDistribution({ opportunities }: PipelineDistributionProp
 
           <div className="space-y-2 mt-4">
             {chartData.map((item, index) => (
-              <div key={index} className="flex items-center justify-between text-sm">
+              <div
+                key={index}
+                className="flex items-center justify-between text-sm"
+              >
                 <div className="flex items-center gap-2">
-                  <div 
-                    className="w-3 h-3 rounded-full" 
+                  <div
+                    className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: item.color }}
                   ></div>
                   <span className="text-gray-400">{item.name}</span>

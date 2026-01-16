@@ -4,6 +4,7 @@ import {
   Filter, ChevronDown, ChevronRight, MoreHorizontal,
   Settings, Trash2, CheckCircle2, Circle
 } from 'lucide-react';
+import crmMockData from '../data/mocks/crm.json';
 
 // --- 1. CONFIGURACIÓN Y TIPOS ---
 
@@ -34,15 +35,6 @@ const STATUS_CONFIG: Record<StatusType, { color: string, dot: string }> = {
   'Cerrado Perdido': { color: 'bg-red-500/15 text-red-400 border-red-500/30', dot: 'bg-red-500' },
 };
 
-// Datos Iniciales (Mock)
-const INITIAL_DATA: Record[] = [
-  { id: 1, fecha: '2024-12-01', cliente: 'Tech Solutions SA', contacto: 'Juan Pérez', telefono: '+54 9 11 1234 5678', status: 'Nuevo' },
-  { id: 2, fecha: '2024-12-02', cliente: 'Logística Norte', contacto: 'María Gonzalez', telefono: '+54 9 11 8765 4321', status: 'Contactar Luego' },
-  { id: 3, fecha: '2024-12-03', cliente: 'Consultora Integral', contacto: 'Carlos Ruiz', telefono: '+54 9 11 1111 2222', status: 'Nuevo' },
-  { id: 4, fecha: '2024-12-04', cliente: 'Agro Export', contacto: 'Ana Silva', telefono: '+54 9 11 3333 4444', status: 'Cerrado Ganado' },
-  { id: 5, fecha: '2024-12-05', cliente: 'Innovación Web', contacto: 'Pedro Diaz', telefono: '+54 9 11 5555 6666', status: 'En Proceso' },
-];
-
 // --- 2. COMPONENTE PRINCIPAL ---
 
 export default function CRMManager() {
@@ -54,10 +46,10 @@ export default function CRMManager() {
   const [views, setViews] = useState<View[]>([
     { id: 'v1', name: 'Vista General', type: 'grid' },
     { id: 'v2', name: 'Mis Clientes', type: 'grid' }
-  ]);
-  const [activeViewId, setActiveViewId] = useState<string>('v1');
-  
-  // Estado de UI
+export default function CRMManager() {
+  // --- ESTADOS ---
+  // Estado de Datos (Fuente de la verdad)
+  const [records, setRecords] = useState<Record[]>(crmMockData.records as Record[]);
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
   const [editingId, setEditingId] = useState<number | null>(null); // Para el dropdown de status
 

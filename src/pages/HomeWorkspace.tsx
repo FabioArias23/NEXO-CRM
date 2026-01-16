@@ -1,196 +1,314 @@
-import React from 'react';
+import React from "react";
 
-import { useNavigate } from 'react-router';
-import { 
-  Search, Bell, Plus, Star, Users, Layout, 
-  Grid, ChevronDown, Shield, 
-  FileText, Briefcase, LogOut,
-  Settings, FolderOpen
-} from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from "react-router";
+import {
+  Search,
+  Bell,
+  Plus,
+  Star,
+  Users,
+  Layout,
+  ChevronDown,
+  Shield,
+  FileText,
+  Briefcase,
+  LogOut,
+  Settings,
+  FolderOpen,
+  AlertTriangle,
+  Filter,
+  Clock,
+  BarChart3,
+  ScrollText,
+} from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export function HomeWorkspace() {
   const navigate = useNavigate();
   const { user, signOut, isAdmin } = useAuth();
 
   return (
-    <div className="flex h-screen bg-black text-white overflow-hidden font-sans">
-      
+    <div className="flex h-screen bg-background overflow-hidden font-sans">
       {/* --- SIDEBAR DEL LOBBY --- */}
-      <aside className="w-64 border-r border-gray-900 flex flex-col bg-black flex-shrink-0">
-        <div className="p-6 flex items-center gap-3 text-white font-bold tracking-wider">
-           <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-             <Shield className="w-5 h-5 text-black" />
-           </div>
-           <span className="text-sm">NEXO CRM</span>
+      <aside className="w-64 border-r border-border flex flex-col bg-background flex-shrink-0 transition-colors duration-300">
+        <div className="p-6 pb-4 border-b border-border bg-background transition-colors duration-300">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center shadow-sm shrink-0">
+              <Shield className="w-6 h-6 text-background" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-xs font-bold text-foreground tracking-tight">
+                NEXO CRM
+              </h2>
+              <p className="text-[10px] text-muted-foreground font-medium tracking-[0.2em] uppercase truncate">
+                Workspace
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="px-3 py-2 space-y-1">
+        <div className="px-4 py-2 space-y-1">
           <SidebarItem icon={Layout} label="Inicio" active />
           <SidebarItem icon={Star} label="Favoritos" />
           <SidebarItem icon={Users} label="Compartido conmigo" />
         </div>
 
-        <div className="my-4 border-t border-gray-900 mx-6"></div>
+        <div className="my-4 border-t border-border mx-6"></div>
 
         {/* Lista de Espacios de Trabajo */}
-        <div className="flex-1 overflow-y-auto px-4">
-          <div className="flex items-center justify-between text-gray-500 mb-3 px-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider">Espacios de trabajo</span>
-            <Plus className="w-4 h-4 cursor-pointer hover:text-white" />
+        <div className="flex-1 overflow-y-auto px-4 pb-4">
+          <div className="flex items-center justify-between text-muted-foreground mb-3 px-2">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/80">
+              Espacios de trabajo
+            </span>
+            <Plus className="w-3.5 h-3.5 cursor-pointer hover:text-foreground transition-colors" />
           </div>
 
           <div className="space-y-1">
-            <div className="flex items-center gap-2 text-white py-2 px-2 hover:bg-gray-900 rounded-lg cursor-pointer transition-colors">
-              <ChevronDown className="w-4 h-4 text-gray-500" />
-              <span className="text-sm font-medium">Nexo Consultora</span>
+            <div className="flex items-center gap-2.5 text-foreground py-2 px-2.5 hover:bg-accent rounded-lg cursor-pointer transition-all group">
+              <div className="w-4 h-4 flex items-center justify-center shrink-0">
+                <FolderOpen className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+              </div>
+              <span className="text-sm font-medium flex-1 truncate">
+                Nexo Consultora
+              </span>
+              <ChevronDown className="w-3.5 h-3.5 text-muted-foreground/60 group-hover:text-muted-foreground transition-colors" />
             </div>
             {/* Accesos rápidos dentro del sidebar */}
-            <div className="pl-8 space-y-1 border-l border-gray-800 ml-4">
-              <p onClick={() => navigate('/base/dashboard')} className="text-xs text-gray-400 hover:text-white cursor-pointer py-1.5 transition-colors">
+            <div className="pl-7 space-y-0.5 border-l border-border ml-4 mt-1">
+              <button
+                onClick={() => navigate("/base/dashboard")}
+                className="w-full text-left text-xs text-muted-foreground hover:text-foreground cursor-pointer py-1.5 px-2.5 hover:bg-accent/60 rounded-md transition-all font-medium"
+              >
                 Principal
-              </p>
-              <p onClick={() => navigate('/base/table')} className="text-xs text-gray-400 hover:text-white cursor-pointer py-1.5 transition-colors">
+              </button>
+              <button
+                onClick={() => navigate("/base/table")}
+                className="w-full text-left text-xs text-muted-foreground hover:text-foreground cursor-pointer py-1.5 px-2.5 hover:bg-accent/60 rounded-md transition-all font-medium"
+              >
                 Base Clientes
-              </p>
+              </button>
             </div>
           </div>
         </div>
 
         {/* Footer del Sidebar */}
-        <div className="p-4 border-t border-gray-900 space-y-1">
-           {isAdmin && (
-             <button 
-               onClick={() => navigate('/admin/users')}
-               className="w-full flex items-center gap-3 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-900 rounded-lg transition-colors text-sm"
-             >
-               <Settings className="w-4 h-4" /> Gestión Usuarios
-             </button>
-           )}
-           <button 
-             onClick={() => signOut()}
-             className="w-full flex items-center gap-3 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-950/30 rounded-lg transition-colors text-sm"
-           >
-             <LogOut className="w-4 h-4" /> Cerrar Sesión
-           </button>
+        <div className="p-4 border-t border-border bg-background transition-colors duration-300 space-y-2">
+          {/* User Profile Compact */}
+          <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-accent/50 cursor-pointer transition-colors group">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-gray-700 to-gray-500 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
+              {user?.name?.charAt(0) || "U"}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-medium text-foreground truncate">
+                {user?.name}
+              </p>
+              <p className="text-[9px] text-muted-foreground uppercase">
+                {isAdmin ? "Admin" : "Consultor"}
+              </p>
+            </div>
+          </div>
+
+          {isAdmin && (
+            <button
+              onClick={() => navigate("/admin/users")}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-muted-foreground hover:text-accent-foreground hover:bg-accent rounded-lg transition-colors text-xs group"
+            >
+              <Settings className="w-3.5 h-3.5 shrink-0" />
+              <span className="flex-1 text-left">Configuración</span>
+            </button>
+          )}
+          <button
+            onClick={() => signOut()}
+            className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/5 rounded-lg transition-colors"
+          >
+            <LogOut className="w-3.5 h-3.5 shrink-0" />
+            <span className="flex-1 text-left">Cerrar sesión</span>
+          </button>
         </div>
       </aside>
 
       {/* --- ÁREA PRINCIPAL (GRID DE BASES) --- */}
-      <main className="flex-1 flex flex-col min-w-0 bg-black relative">
-        {/* Top Bar Home */}
-        <header className="h-16 border-b border-gray-900 flex items-center justify-between px-8 bg-black/50 backdrop-blur-md sticky top-0 z-10">
-          <div className="flex-1 max-w-xl relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-            <input 
-              type="text" 
-              placeholder="Buscar bases, tablas o personas (Ctrl+K)..." 
-              className="w-full bg-gray-900 border border-gray-800 rounded-full py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-gray-600 focus:bg-gray-800 transition-all placeholder:text-gray-600"
-            />
-          </div>
-          <div className="flex items-center gap-6 ml-4">
-            <Bell className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
-            <div className="flex items-center gap-3 pl-6 border-l border-gray-800">
-              <div className="text-right hidden md:block">
-                <p className="text-xs text-white font-medium">{user?.name}</p>
-                <p className="text-[10px] text-gray-500 uppercase">{isAdmin ? 'Admin' : 'Consultor'}</p>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-white to-gray-400 flex items-center justify-center text-black text-xs font-bold border border-gray-700">
-                {user?.name?.charAt(0) || 'U'}
-              </div>
+      <main className="flex-1 flex flex-col min-w-0 bg-background relative">
+        {/* Top Bar Home - Compacto y funcional */}
+        <header className="h-14 border-b border-border flex items-center justify-between px-6 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+          <div className="flex items-center gap-4 flex-1">
+            <div className="flex-1 max-w-md relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Buscar o filtrar bases..."
+                className="w-full bg-muted/50 border border-border rounded-lg py-1.5 pl-9 pr-3 text-xs text-foreground focus:outline-none focus:border-ring focus:bg-background transition-all placeholder:text-muted-foreground"
+              />
+              <kbd className="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground bg-background border border-border rounded">
+                ⌘K
+              </kbd>
             </div>
+            <button className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
+              <Filter className="w-3.5 h-3.5" />
+              Filtros
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors">
+              <Bell className="w-4 h-4" />
+              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+            </button>
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-8 animate-in fade-in duration-500">
-          
-          {/* Banner de Bienvenida */}
-          <div className="bg-gradient-to-r from-gray-900 to-black border border-gray-800 rounded-2xl p-8 mb-10 relative overflow-hidden group shadow-2xl">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none"></div>
-            <div className="relative z-10">
-              <h1 className="text-3xl font-bold mb-2 text-white">Hola, {user?.name?.split(' ')[0]}</h1>
-              <p className="text-gray-400 text-sm max-w-xl mb-6">
-                Bienvenido a NEXO ENTERPRISE. Aquí tienes un resumen de tus bases de datos y actividades recientes.
+        <div className="flex-1 overflow-y-auto">
+          {/* Banner de Bienvenida - Compacto y Funcional (120px altura) */}
+          <div className="mx-6 mt-6 mb-5 bg-gradient-to-r from-primary/8 via-primary/5 to-background border border-border/60 rounded-xl p-6 flex items-center justify-between shadow-sm hover:shadow-md transition-all">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground mb-1.5 tracking-tight">
+                Hola, {user?.name?.split(" ")[0]} 👋
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Accede rápidamente a tus bases de trabajo
               </p>
-              <button 
-                onClick={() => navigate('/base/dashboard')}
-                className="bg-white text-black px-5 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-              >
-                Continuar trabajando
+            </div>
+            <button
+              onClick={() => navigate("/base/dashboard")}
+              className="flex items-center gap-2.5 px-6 py-3 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-primary/90 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+            >
+              <Layout className="w-4 h-4" />
+              Continuar trabajando
+            </button>
+          </div>
+
+          {/* Contenedor de Bases con padding profesional (24px) */}
+          <div className="px-6 pb-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-base font-semibold text-foreground tracking-tight">
+                  Bases de Trabajo
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Acceso rápido a tus módulos principales
+                </p>
+              </div>
+              <button className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-primary-foreground bg-primary hover:bg-primary/90 rounded-lg transition-all shadow-sm hover:shadow-md">
+                <Plus className="w-4 h-4" />
+                Nueva Base
               </button>
             </div>
-          </div>
 
-          {/* Grid de Bases (Estilo Airtable) */}
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <Grid className="w-4 h-4" /> Bases Activas
-            </h2>
-            <div className="flex gap-2">
-              <button className="text-xs text-gray-500 hover:text-white transition-colors">Recientes</button>
-              <span className="text-gray-700">|</span>
-              <button className="text-xs text-gray-500 hover:text-white transition-colors">Todas</button>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {/* BASE 1: Principal */}
-            <BaseCard 
-              title="CONSULTORA MF" 
-              subtitle="Dashboard Ejecutivo" 
-              color="bg-blue-600"
-              borderColor="group-hover:border-blue-500/50"
-              icon={<Briefcase className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/dashboard')}
-              starred
-            />
-            
-            {/* BASE 2: Clientes */}
-            <BaseCard 
-              title="BASE CLIENTES" 
-              subtitle="Tabla Maestra" 
-              color="bg-emerald-600"
-              borderColor="group-hover:border-emerald-500/50"
-              icon={<Users className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/table')}
-            />
-            
-            {/* BASE 3: Pipeline */}
-            <BaseCard 
-              title="PIPELINE VENTAS" 
-              subtitle="Kanban View" 
-              color="bg-purple-600"
-              borderColor="group-hover:border-purple-500/50"
-              icon={<Layout className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/kanban')}
-            />
-            
-            {/* BASE 4: Siniestros (Nuevo) */}
-            <BaseCard 
-              title="SINIESTROS" 
-              subtitle="Gestión de Casos" 
-              color="bg-red-600"
-              borderColor="group-hover:border-red-500/50"
-              icon={<Shield className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/table')} 
-            />
-            
-            {/* BASE 5: Pólizas (Nuevo) */}
-             <BaseCard 
-              title="PÓLIZAS 2025" 
-              subtitle="Renovaciones y Altas" 
-              color="bg-orange-500"
-              borderColor="group-hover:border-orange-500/50"
-              icon={<FileText className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/table')} 
-            />
+            {/* Grid de 3 columnas con gap de 24px */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* BASE 1: Dashboard Principal */}
+              <BaseCard
+                title="Dashboard Ejecutivo"
+                metrics={{ primary: "247 ops", secondary: "34% conversión" }}
+                color="bg-gradient-to-br from-blue-500 to-blue-600"
+                icon={<Briefcase className="w-5 h-5" />}
+                onClick={() => navigate("/base/dashboard")}
+                activity="Actualizado hace 5 min"
+                starred
+              />
 
-            {/* Crear Nueva Base */}
-            <div className="border border-dashed border-gray-800 rounded-xl h-40 flex flex-col items-center justify-center cursor-pointer hover:border-gray-600 hover:bg-gray-900/30 transition-all group">
-                <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center mb-3 group-hover:bg-gray-800 transition-colors">
-                  <Plus className="w-5 h-5 text-gray-400 group-hover:text-white" />
+              {/* BASE 2: Clientes */}
+              <BaseCard
+                title="Base Clientes"
+                metrics={{
+                  primary: "1,247 registros",
+                  secondary: "+23 esta semana",
+                }}
+                color="bg-gradient-to-br from-emerald-500 to-emerald-600"
+                icon={<Users className="w-5 h-5" />}
+                onClick={() => navigate("/base/table")}
+                activity="18 cambios hoy"
+              />
+
+              {/* BASE 3: Pipeline */}
+              <BaseCard
+                title="Pipeline Ventas"
+                metrics={{
+                  primary: "$2.4M activo",
+                  secondary: "42 en negociación",
+                }}
+                color="bg-gradient-to-br from-purple-500 to-purple-600"
+                icon={<BarChart3 className="w-5 h-5" />}
+                onClick={() => navigate("/base/kanban")}
+                activity="3 deals cerrados hoy"
+                starred
+              />
+
+              {/* BASE 4: Siniestros - Con alerta */}
+              <BaseCard
+                title="Gestión Siniestros"
+                metrics={{
+                  primary: "14 casos activos",
+                  secondary: "3 requieren atención",
+                }}
+                color="bg-gradient-to-br from-red-500 to-red-600"
+                icon={<Shield className="w-5 h-5" />}
+                onClick={() => navigate("/base/table")}
+                activity="2 nuevos hoy"
+                alert
+                alertMessage="3 casos críticos"
+              />
+
+              {/* BASE 5: Pólizas */}
+              <BaseCard
+                title="Pólizas"
+                metrics={{
+                  primary: "892 activas",
+                  secondary: "47 por renovar",
+                }}
+                color="bg-gradient-to-br from-orange-500 to-orange-600"
+                icon={<ScrollText className="w-5 h-5" />}
+                onClick={() => navigate("/base/table")}
+                activity="12 renovaciones este mes"
+              />
+
+              {/* Crear Nueva Base */}
+              <div className="border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:border-primary/40 hover:bg-accent/50 transition-all group min-h-[180px]">
+                <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center mb-3 group-hover:bg-primary/10 transition-colors">
+                  <Plus className="w-6 h-6 text-muted-foreground group-hover:text-primary" />
                 </div>
-                <span className="text-sm text-gray-500 group-hover:text-gray-300 font-medium">Crear nueva base</span>
+                <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground">
+                  Crear nueva base
+                </span>
+              </div>
+            </div>
+
+            {/* Quick Actions Footer */}
+            <div className="mt-8 pt-6 border-t border-border/60">
+              <h3 className="text-sm font-semibold text-foreground tracking-tight mb-4">
+                Acciones Rápidas
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <QuickAction
+                  label="Nueva Oportunidad"
+                  icon={<Plus className="w-4 h-4" />}
+                  onClick={() => navigate("/base/dashboard")}
+                />
+                <QuickAction
+                  label="Ver Reportes"
+                  icon={<FileText className="w-4 h-4" />}
+                  onClick={() => {}}
+                />
+                <QuickAction
+                  label="Calendario"
+                  icon={<Clock className="w-4 h-4" />}
+                  onClick={() => {}}
+                />
+                <QuickAction
+                  label="Configuración"
+                  icon={<Settings className="w-4 h-4" />}
+                  onClick={() => navigate("/admin/users")}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -201,43 +319,155 @@ export function HomeWorkspace() {
 
 // Subcomponentes del HomeWorkspace
 
-function SidebarItem({ icon: Icon, label, active }: { icon: any, label: string, active?: boolean }) {
+function SidebarItem({
+  icon: Icon,
+  label,
+  active,
+}: {
+  icon: any;
+  label: string;
+  active?: boolean;
+}) {
   return (
-    <div className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-all ${active ? 'bg-gray-900 text-white font-medium' : 'text-gray-400 hover:text-white hover:bg-gray-900/50'}`}>
-      <Icon className="w-4 h-4" />
-      <span className="text-sm">{label}</span>
+    <div
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all group ${active ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-accent-foreground hover:bg-accent"}`}
+    >
+      <div className="w-5 h-5 flex items-center justify-center shrink-0">
+        <Icon className="w-[18px] h-[18px] transition-transform group-hover:scale-110" />
+      </div>
+      <span className="text-sm flex-1">{label}</span>
     </div>
-  )
+  );
 }
 
-function BaseCard({ title, subtitle, color, borderColor, icon, starred, onClick }: any) {
-  return (
-    <div onClick={onClick} className={`bg-gray-950 border border-gray-900 ${borderColor} rounded-xl overflow-hidden cursor-pointer transition-all hover:shadow-2xl hover:-translate-y-1 group h-40 flex flex-col relative`}>
-       {/* Icono y Header */}
-       <div className="p-5 flex items-start gap-4 h-full relative z-10">
-          <div className={`w-14 h-14 rounded-xl ${color} flex items-center justify-center shadow-lg shrink-0 group-hover:scale-105 transition-transform duration-300`}>
-             {icon}
-          </div>
-          <div className="flex-1 min-w-0 pt-1">
-             <h3 className="text-white font-bold text-base truncate group-hover:text-blue-200 transition-colors">{title}</h3>
-             <p className="text-gray-500 text-xs mt-1.5">{subtitle}</p>
-             
-             <div className="mt-4 flex -space-x-2 overflow-hidden">
-                <div className="inline-block h-6 w-6 rounded-full ring-2 ring-gray-950 bg-gray-800 flex items-center justify-center text-[8px] text-white">MF</div>
-                <div className="inline-block h-6 w-6 rounded-full ring-2 ring-gray-950 bg-gray-700 flex items-center justify-center text-[8px] text-white">LG</div>
-             </div>
-          </div>
-       </div>
-       
-       {/* Estrella Favoritos */}
-       {starred && (
-         <div className="absolute top-4 right-4 text-yellow-500/50 group-hover:text-yellow-400 transition-colors">
-            <Star className="w-4 h-4 fill-current" />
-         </div>
-       )}
+// Base Card Refactorizada - Semántica y Accesibilidad Core
+function BaseCard({
+  title,
+  metrics,
+  color,
+  icon,
+  starred,
+  activity,
+  alert,
+  alertMessage,
+  onClick,
+}: {
+  title: string;
+  metrics: { primary: string; secondary: string };
+  color: string;
+  icon: React.ReactNode;
+  starred?: boolean;
+  activity: string;
+  alert?: boolean;
+  alertMessage?: string;
+  onClick: () => void;
+}) {
+  // Extraemos valor y unidad para el renderizado
+  const [primaryValue, ...primaryUnit] = metrics.primary.split(" ");
+  const unitText = primaryUnit.join(" ");
 
-       {/* Barra de color inferior con gradiente */}
-       <div className={`h-1.5 w-full ${color} opacity-80`}></div>
-    </div>
-  )
+  return (
+    <article
+      onClick={onClick}
+      className="group cursor-pointer focus-within:ring-2 focus-within:ring-primary rounded-xl transition-all hover:scale-[1.02] hover:-translate-y-1"
+    >
+      <Card
+        className={`relative overflow-hidden border-2 shadow-sm transition-all hover:shadow-lg ${alert ? "border-destructive/30" : "hover:border-primary/20"}`}
+      >
+        {/* Indicadores de Estado (Alertas o Favoritos) */}
+        <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+          {alert && alertMessage && (
+            <div
+              role="alert"
+              className="flex items-center gap-1.5 px-2.5 py-1 bg-destructive text-destructive-foreground rounded-full text-[10px] font-bold uppercase tracking-wide"
+            >
+              <AlertTriangle className="w-3 h-3" />
+              <span>{alertMessage}</span>
+            </div>
+          )}
+          {starred && !alert && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground/40 hover:text-yellow-500 hover:bg-transparent"
+              aria-label={`Quitar ${title} de favoritos`}
+            >
+              <Star className="h-5 w-5 fill-current" />
+            </Button>
+          )}
+        </div>
+
+        <CardHeader className="pb-4">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div
+                className={`w-10 h-10 rounded-lg ${color} flex items-center justify-center shadow-sm text-white flex-shrink-0 group-hover:scale-110 transition-transform duration-200`}
+              >
+                {icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg font-semibold tracking-tight truncate group-hover:text-primary transition-colors duration-200">
+                  {title}
+                </CardTitle>
+                <CardDescription className="text-xs flex items-center gap-1 mt-1">
+                  <Clock className="w-3 h-3" />
+                  <time dateTime={new Date().toISOString()}>{activity}</time>
+                </CardDescription>
+              </div>
+            </div>
+          </div>
+        </CardHeader>
+
+        <CardContent className="pt-0">
+          <div className="space-y-3">
+            {/* Métrica principal - Destacada */}
+            <div className="flex flex-col">
+              <dt className="sr-only"></dt>
+              <dd className="text-3xl font-bold tracking-tight text-foreground">
+                {primaryValue}
+                {unitText && (
+                  <span className="text-lg font-medium text-muted-foreground ml-1">
+                    {unitText}
+                  </span>
+                )}
+              </dd>
+            </div>
+
+            {/* Métrica secundaria - Subordinada */}
+            <div className="flex flex-col">
+              <dt className="sr-only"></dt>
+              <dd className="text-sm font-medium text-muted-foreground">
+                {metrics.secondary}
+              </dd>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </article>
+  );
+}
+
+// Quick Action Button
+function QuickAction({
+  label,
+  icon,
+  onClick,
+}: {
+  label: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex items-center gap-3 px-4 py-3.5 bg-card border border-border/60 rounded-xl hover:border-primary/30 hover:bg-accent hover:shadow-md transition-all group text-left shadow-sm"
+    >
+      <div className="w-9 h-9 rounded-lg bg-muted/70 flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors text-muted-foreground group-hover:text-primary">
+        {icon}
+      </div>
+      <span className="text-sm font-medium text-foreground truncate">
+        {label}
+      </span>
+    </button>
+  );
 }

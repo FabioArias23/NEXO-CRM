@@ -1,0 +1,72 @@
+{
+  "kpi": {
+    "totalPremium": 12450000,
+    "policyCount": 1245,
+    "claimsCount": 23,
+    "renewalsCount": 45,
+    "avgTicket": 10000
+  },
+  "salesTrend": [
+    { "name": "Ene", "auto": 4000, "vida": 2400 },
+    { "name": "Feb", "auto": 3000, "vida": 1398 },
+    { "name": "Mar", "auto": 2000, "vida": 9800 },
+    { "name": "Abr", "auto": 2780, "vida": 3908 },
+    { "name": "May", "auto": 1890, "vida": 4800 },
+    { "name": "Jun", "auto": 2390, "vida": 3800 },
+    { "name": "Jul", "auto": 3490, "vida": 4300 }
+  ],
+  "distributionData": [
+    { "name": "Automotor", "value": 45, "color": "#3b82f6" },
+    { "name": "Vida & Retiro", "value": 30, "color": "#10b981" },
+    { "name": "ART", "value": 15, "color": "#8b5cf6" },
+    { "name": "Otros", "value": 10, "color": "#f59e0b" }
+  ],
+  "channelData": [
+    { "name": "Directo", "ventas": 120 },
+    { "name": "Referidos", "ventas": 85 },
+    { "name": "Web", "ventas": 45 },
+    { "name": "Brokers", "ventas": 30 }
+  ],
+  "renewals": [
+    {
+      "id": 1,
+      "client": "Logística Norte S.A.",
+      "policy": "Flota Camiones",
+      "date": "2026-01-12",
+      "amount": 450000,
+      "risk": "high"
+    },
+    {
+      "id": 2,
+      "client": "Juan Pérez",
+      "policy": "Todo Riesgo - Ranger",
+      "date": "2026-01-15",
+      "amount": 85000,
+      "risk": "low"
+    },
+    {
+      "id": 3,
+      "client": "Tech Solutions",
+      "policy": "ART Colectivo",
+      "date": "2026-01-20",
+      "amount": 1200000,
+      "risk": "medium"
+    },
+    {
+      "id": 4,
+      "client": "María González",
+      "policy": "Combinado Familiar",
+      "date": "2026-01-22",
+      "amount": 45000,
+      "risk": "low"
+    },
+    {
+      "id": 5,
+      "client": "Constructora del Valle",
+      "policy": "Caución Obra",
+      "date": "2026-01-25",
+      "amount": 890000,
+      "risk": "high"
+    }
+  ]
+}
