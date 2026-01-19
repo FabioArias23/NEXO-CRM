@@ -1,9 +1,6 @@
-// LÓGICA DE NEGOCIO
-// Validaciones, transformaciones, reglas de negocio
-// Usa queries
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { opportunitiesQueries } from "../client/queries/opportunities.queries";
-import { Opportunity, OpportunityRow, ApiError } from "../core/types";
+import type { Opportunity, OpportunityRow, ApiError } from "../core/types";
 
 export const opportunitiesService = {
   /**

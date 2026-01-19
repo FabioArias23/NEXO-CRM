@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { opportunitiesService } from "../services/opportunities.service";
-import { Opportunity } from "../core/types";
+import { type Opportunity } from "../core/types";
 
 export function useOpportunities() {
   const { user } = useAuth();

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { authQueries } from "../client/queries/auth.queries";
-import { User, AuthResponse, ApiError, UserRole } from "../core/types";
+import type { User, AuthResponse, ApiError, UserRole } from "../core/types";
 
 export const authService = {
   async login(email: string, password: string): Promise<AuthResponse> {
