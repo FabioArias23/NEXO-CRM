@@ -7,6 +7,7 @@ import {
   TrendingUp,
   Users,
   Settings,
+  Shield,
 } from "lucide-react";
 
 export interface NavItem {
@@ -27,9 +28,9 @@ export const APP_NAVIGATION: NavItem[] = [
     path: "/base/views",
     icon: Columns3,
     children: [
-      { label: "Vista Tabla", path: "/base/table" },
-      { label: "Pipeline Kanban", path: "/base/kanban" },
-      { label: "Consultorías", path: "/base/consultorias" },
+      { label: "Vista Tabla", path: "/base/table", icon: Table2 },
+      { label: "Pipeline Kanban", path: "/base/kanban", icon: ClipboardList },
+      { label: "Consultorías", path: "/base/consultorias", icon: Users },
     ],
   },
   {
@@ -37,8 +38,8 @@ export const APP_NAVIGATION: NavItem[] = [
     path: "/base/admin",
     icon: Settings,
     children: [
-      { label: "Analytics", path: "/base/analytics" },
-      { label: "Gestión de Usuarios", path: "/admin/users" },
+      { label: "Analytics", path: "/base/analytics", icon: TrendingUp },
+      { label: "Gestión de Usuarios", path: "/admin/users", icon: Shield },
     ],
   },
 ];
