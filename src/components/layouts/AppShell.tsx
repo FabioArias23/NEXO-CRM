@@ -15,7 +15,7 @@ export function AppShell() {
         <CRMSidebar />
 
         <div className="flex flex-1 flex-col">
-          <CRMHeader />
+          <CRMHeader showSidebarTrigger={true} showBreadcrumbs={true} />
 
           <main className="mx-auto size-full max-w-7xl flex-1 px-4 py-6 sm:px-6">
             <Outlet /> {}
@@ -34,5 +34,3 @@ export function AppShell() {
     </div>
   );
 }
-
-

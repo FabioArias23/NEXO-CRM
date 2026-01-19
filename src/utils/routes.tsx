@@ -27,8 +27,14 @@ export const router = createBrowserRouter([
         element: <AuthGuard />,
         children: [
           {
-            index: true,
+            path: "",
             element: <HomeShell />,
+            children: [
+              {
+                index: true,
+                Component: HomeWorkspace,
+              },
+            ],
           },
           {
             path: "base",

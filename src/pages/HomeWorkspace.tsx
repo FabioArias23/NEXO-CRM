@@ -12,15 +12,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function HomeWorkspace() {
   const navigate = useNavigate();
@@ -112,16 +105,19 @@ export function HomeWorkspace() {
           )}
 
           {/* Create New - Empty State */}
-          <Card className="border-dashed border-2 hover:border-primary/50 hover:bg-accent/50 cursor-pointer transition-all group">
-            <CardContent className="flex flex-col items-center justify-center h-full min-h-[180px] p-6">
-              <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center mb-3 group-hover:bg-primary/10 transition-colors">
-                <Plus className="h-6 w-6 text-muted-foreground group-hover:text-primary" />
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/50 hover:border-primary/30 group cursor-pointer min-h-[180px] flex flex-col">
+            {/* Gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center">
+              <div className="p-3 rounded-xl bg-muted ring-1 ring-border text-muted-foreground transition-transform group-hover:scale-110 duration-300 mb-4">
+                <Plus className="h-6 w-6" />
               </div>
-              <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground">
+              <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                 Crear nuevo espacio
               </p>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -201,41 +197,52 @@ function WorkspaceCard({
   onClick,
 }: WorkspaceCardProps) {
   return (
-    <Card
-      className="hover:shadow-lg hover:border-primary/20 transition-all cursor-pointer group"
+    <div
+      className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/50 hover:border-primary/30 group cursor-pointer min-h-[180px] flex flex-col"
       onClick={onClick}
     >
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-              {icon}
-            </div>
-            <div className="flex-1 min-w-0">
-              <CardTitle className="text-base group-hover:text-primary transition-colors">
-                {title}
-              </CardTitle>
-              <CardDescription className="text-xs mt-1">
-                {description}
-              </CardDescription>
-            </div>
-          </div>
+      {/* Gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      <div className="relative z-10 flex justify-between items-start mb-auto">
+        <div className="p-3 rounded-xl bg-primary/10 ring-1 ring-primary/20 text-primary transition-transform group-hover:scale-110 duration-300 shrink-0">
+          {icon}
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="flex items-center justify-between">
+        {badge && (
+          <div
+            className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full shrink-0 ${
+              badge.variant === "default"
+                ? "text-emerald-400 bg-emerald-500/10 border border-emerald-500/20"
+                : badge.variant === "secondary"
+                  ? "text-gray-400 bg-gray-500/10 border border-gray-500/20"
+                  : "text-red-400 bg-red-500/10 border border-red-500/20"
+            }`}
+          >
+            {badge.label}
+          </div>
+        )}
+      </div>
+
+      <div className="relative z-10 mt-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h3 className="text-lg font-bold text-card-foreground mb-1 leading-tight group-hover:text-primary transition-colors">
+            {title}
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {description}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between mt-4">
           <div className="text-xs text-muted-foreground">
             {stats.label}:{" "}
-            <span className="font-semibold text-foreground">{stats.value}</span>
+            <span className="font-bold text-card-foreground">
+              {stats.value}
+            </span>
           </div>
-          {badge && (
-            <Badge variant={badge.variant} className="text-xs">
-              {badge.label}
-            </Badge>
-          )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

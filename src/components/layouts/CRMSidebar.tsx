@@ -1,14 +1,6 @@
-import { Link, useLocation } from "react-router";
-import {
-  ChartNoAxesCombinedIcon,
-  Table2Icon,
-  Columns3Icon,
-  ClipboardListIcon,
-  TrendingUpIcon,
-  UsersIcon,
-  SettingsIcon,
-} from "lucide-react";
-
+import { useLocation } from "react-router";
+import { Link } from "react-router";
+import { ChevronRight } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,113 +10,100 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { APP_NAVIGATION, type NavItem } from "@/utils/navigationConfig";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function CRMSidebar() {
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const { isAdmin } = useAuth();
 
-  const isActive = (path: string) => location.pathname.includes(path);
+  // Filtrar items según permisos
+  const filteredNav = APP_NAVIGATION.filter((item) => {
+    if (item.path === "/base/admin" && !isAdmin) return false;
+    if (item.children) {
+      item.children = item.children.filter((child) => {
+        if (child.path === "/admin/users" && !isAdmin) return false;
+        return true;
+      });
+      return item.children.length > 0 || item.path !== "/base/admin";
+    }
+    return true;
+  });
 
   return (
     <Sidebar>
       <SidebarContent>
-        {}
         <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={isActive("/base/dashboard")}
-                >
-                  <Link to="/base/dashboard">
-                    <ChartNoAxesCombinedIcon />
-                    <span>Dashboard</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {}
-        <SidebarGroup>
-          <SidebarGroupLabel>Vistas</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/base/table")}>
-                  <Link to="/base/table">
-                    <Table2Icon />
-                    <span>Vista Tabla</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/base/kanban")}>
-                  <Link to="/base/kanban">
-                    <Columns3Icon />
-                    <span>Pipeline Kanban</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={isActive("/base/consultorias")}
-                >
-                  <Link to="/base/consultorias">
-                    <ClipboardListIcon />
-                    <span>Consultorías</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {}
-        <SidebarGroup>
-          <SidebarGroupLabel>Administración</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={isActive("/base/analytics")}
-                >
-                  <Link to="/base/analytics">
-                    <TrendingUpIcon />
-                    <span>Analytics</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/admin/users")}>
-                  <Link to="/admin/users">
-                    <UsersIcon />
-                    <span>Gestión de Usuarios</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link to="/base/settings">
-                    <SettingsIcon />
-                    <span>Configuración</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
+          <SidebarMenu>
+            {filteredNav.map((item) => (
+              <NavItemComponent
+                key={item.path}
+                item={item}
+                pathname={pathname}
+              />
+            ))}
+          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );
 }
 
+// Componente recursivo para manejar items con children
+interface NavItemComponentProps {
+  item: NavItem;
+  pathname: string;
+}
 
+function NavItemComponent({ item, pathname }: NavItemComponentProps) {
+  const Icon = item.icon;
+  const isActive =
+    pathname === item.path || pathname.startsWith(item.path + "/");
+  const hasChildren = item.children && item.children.length > 0;
+
+  if (!hasChildren) {
+    return (
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild isActive={isActive}>
+          <Link to={item.path}>
+            {Icon && <Icon className="h-4 w-4" />}
+            <span>{item.label}</span>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
+  }
+
+  // Con children (items anidados)
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild isActive={isActive}>
+        <Link to={item.path}>
+          {Icon && <Icon className="h-4 w-4" />}
+          <span>{item.label}</span>
+          {hasChildren && (
+            <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
+          )}
+        </Link>
+      </SidebarMenuButton>
+
+      {hasChildren && (
+        <SidebarMenuSub>
+          {item.children.map((child) => (
+            <SidebarMenuSubItem key={child.path}>
+              <SidebarMenuSubButton asChild isActive={pathname === child.path}>
+                <Link to={child.path}>
+                  <span>{child.label}</span>
+                </Link>
+              </SidebarMenuSubButton>
+            </SidebarMenuSubItem>
+          ))}
+        </SidebarMenuSub>
+      )}
+    </SidebarMenuItem>
+  );
+}
