@@ -137,7 +137,7 @@ export function TableView() {
           </div>
         </div>
 
-        {/* Quick Stats */}
+        {}
         <QuickStats opportunities={filteredOpportunities} />
 
         <div className="bg-gray-950 border border-gray-900 rounded-xl p-4">
@@ -186,7 +186,7 @@ export function TableView() {
           </div>
         </div>
 
-        {/* Advanced Filters Panel */}
+        {}
         {showAdvancedFilters && (
           <AdvancedFilters
             filters={advancedFilters}
@@ -348,3 +348,5 @@ export function TableView() {
     </>
   );
 }
+
+

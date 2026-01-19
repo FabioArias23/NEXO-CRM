@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { authQueries } from "../client/queries/auth.queries";
 import type { User, AuthResponse, ApiError, UserRole } from "../core/types";
 
@@ -71,9 +71,7 @@ export const authService = {
       );
       if (error) throw error;
 
-      // Auto-login después de signup
       try {
-        // Retornar el resultado completo del login (user + token)
         return await this.login(email, password);
       } catch (loginError: any) {
         if (data?.user && !data?.session) {
@@ -148,3 +146,5 @@ export const authService = {
     };
   },
 };
+
+

@@ -1,10 +1,7 @@
 import { supabase } from "../supabase";
 
 export const userQueries = {
-  /**
-   * Obtener perfil de usuario desde public.users (SEGURO)
-   * Usa RLS para proteger acceso
-   */
+  
   async getUserProfile(userId: string) {
     try {
       const { data, error } = await supabase
@@ -15,15 +12,11 @@ export const userQueries = {
 
       return { data, error };
     } catch (err) {
-      // Si la tabla no existe, retornar null sin error
       return { data: null, error: null };
     }
   },
 
-  /**
-   * Actualizar perfil de usuario (solo nombre)
-   * El role NO puede ser modificado aquí (protegido por RLS)
-   */
+  
   async updateUserProfile(userId: string, updates: { name?: string }) {
     const { data, error } = await supabase
       .from("users")
@@ -35,10 +28,7 @@ export const userQueries = {
     return { data, error };
   },
 
-  /**
-   * Verificar si un usuario es admin
-   * Lee desde public.users (NO desde user_metadata)
-   */
+  
   async isUserAdmin(userId: string): Promise<boolean> {
     const { data, error } = await supabase
       .from("users")
@@ -51,3 +41,5 @@ export const userQueries = {
     return data.role === "admin";
   },
 };
+
+

@@ -10,7 +10,6 @@ interface ModernMetricCardProps {
 }
 
 export function ModernMetricCard({ title, value, trend, trendUp, icon: Icon, color }: ModernMetricCardProps) {
-  // Mapas de colores para manejar estilos dinámicos
   const colorMap = {
     blue:   { bg: 'bg-blue-500/10', text: 'text-blue-500', border: 'hover:border-blue-500/50' },
     emerald:{ bg: 'bg-emerald-500/10', text: 'text-emerald-500', border: 'hover:border-emerald-500/50' },
@@ -28,7 +27,7 @@ export function ModernMetricCard({ title, value, trend, trendUp, icon: Icon, col
       transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/50 ${theme.border}
       group
     `}>
-      {/* Efecto de brillo en el fondo */}
+      {}
       <div className={`absolute -right-6 -top-6 h-24 w-24 rounded-full ${theme.bg} blur-2xl opacity-20 transition-opacity group-hover:opacity-40`} />
 
       <div className="flex justify-between items-start mb-4 relative z-10">
@@ -49,3 +48,5 @@ export function ModernMetricCard({ title, value, trend, trendUp, icon: Icon, col
     </div>
   );
 }
+
+

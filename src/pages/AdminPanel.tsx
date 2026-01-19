@@ -112,7 +112,7 @@ export function AdminPanel() {
         </p>
       </div>
 
-      {/* Summary Cards */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-card border border-border rounded-xl p-6 hover:border-foreground/20 transition-colors shadow-sm">
           <div className="flex items-center justify-between mb-4">
@@ -168,7 +168,7 @@ export function AdminPanel() {
         </div>
       </div>
 
-      {/* Tabs */}
+      {}
       <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
         <div className="border-b border-border flex">
           <button
@@ -195,7 +195,7 @@ export function AdminPanel() {
           </button>
         </div>
 
-        {/* Activity Log Tab */}
+        {}
         {activeTab === "activity" && (
           <div className="p-6 max-h-[600px] overflow-y-auto custom-scrollbar">
             <div className="space-y-3">
@@ -273,7 +273,7 @@ export function AdminPanel() {
           </div>
         )}
 
-        {/* User Stats Tab */}
+        {}
         {activeTab === "users" && (
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -368,3 +368,5 @@ export function AdminPanel() {
     </div>
   );
 }
+
+

@@ -18,7 +18,6 @@ interface RecordDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   record: ClientRecord;
-  // Esta es la línea que faltaba y causa el error:
   onUpdateRecord?: (id: number, field: string, value: any) => void;
 }
 
@@ -32,17 +31,14 @@ export function RecordDrawer({
     "detalle",
   );
   const [note, setNote] = useState("");
-  // Inicializamos con un string vacío si observaciones es undefined
   const [currentObservaciones, setCurrentObservaciones] = useState(
     record?.observaciones || "",
   );
 
-  // Sincronizar observaciones cuando cambia el registro seleccionado
   useEffect(() => {
     setCurrentObservaciones(record?.observaciones || "");
   }, [record]);
 
-  // Manejador para guardar las observaciones
   const handleSave = () => {
     if (onUpdateRecord && record) {
       onUpdateRecord(record.id, "observaciones", currentObservaciones);
@@ -50,7 +46,6 @@ export function RecordDrawer({
     onClose();
   };
 
-  // Manejadores de acciones reales
   const handleCall = () => {
     if (!record.tel1) return;
     window.location.href = `tel:${record.tel1}`;
@@ -73,17 +68,17 @@ export function RecordDrawer({
 
   return (
     <>
-      {/* Overlay Oscuro */}
+      {}
       <div
         className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300"
         onClick={onClose}
       />
 
-      {/* Panel Lateral */}
+      {}
       <div
         className={`fixed inset-y-0 right-0 w-[500px] bg-[#0A0A0A] border-l border-gray-800 shadow-2xl z-50 transform transition-transform duration-300 ease-out flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        {/* HEADER */}
+        {}
         <div className="px-6 py-5 border-b border-gray-800 flex justify-between items-start bg-gray-950">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -117,7 +112,7 @@ export function RecordDrawer({
           </button>
         </div>
 
-        {/* ACCIONES RÁPIDAS */}
+        {}
         <div className="grid grid-cols-3 gap-2 px-6 py-4 border-b border-gray-800">
           <ActionButton
             icon={Phone}
@@ -142,7 +137,7 @@ export function RecordDrawer({
           />
         </div>
 
-        {/* TABS */}
+        {}
         <div className="flex border-b border-gray-800 px-6">
           <Tab
             label="Detalle del Cliente"
@@ -156,7 +151,7 @@ export function RecordDrawer({
           />
         </div>
 
-        {/* CONTENIDO */}
+        {}
         <div className="flex-1 overflow-y-auto p-6">
           {activeTab === "detalle" ? (
             <div className="space-y-6">
@@ -235,7 +230,7 @@ export function RecordDrawer({
           )}
         </div>
 
-        {/* FOOTER */}
+        {}
         <div className="p-4 border-t border-gray-800 bg-gray-950 flex justify-end gap-3">
           <button
             onClick={onClose}
@@ -255,7 +250,6 @@ export function RecordDrawer({
   );
 }
 
-// --- SUBCOMPONENTES ---
 
 function ActionButton({ icon: Icon, label, color, hover, onClick }: any) {
   return (
@@ -363,3 +357,5 @@ function TimelineItem({ date, user, action, text }: any) {
     </div>
   );
 }
+
+

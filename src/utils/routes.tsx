@@ -1,16 +1,15 @@
 import { createBrowserRouter, Navigate, Outlet } from "react-router";
 import { AuthGuard } from "../components/auth/AuthGuard";
+import { AppShell } from "../components/layouts/AppShell";
+import { HomeShell } from "../components/layouts/HomeShell";
 import { ConsultoriaView } from "../pages/ConsultoriaView";
 import { LoginPage } from "../pages/LoginPage";
-import { MainLayout } from "../components/layouts/MainLayout";
 
-// Páginas del Proyecto (Dentro de una Base)
 import { Dashboard } from "../pages/Dashboard";
 import { TableView } from "../pages/TableView";
 import { KanbanView } from "../pages/KanbanView";
 import { AdminPanel } from "../pages/AdminPanel"; // Panel de métricas antiguas/analytics
 
-// Páginas Globales (Nuevas)
 import { HomeWorkspace } from "../pages/HomeWorkspace";
 import { AdminUserManagement } from "../pages/AdminUserManagement";
 
@@ -29,15 +28,11 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            Component: HomeWorkspace,
-          },
-          {
-            path: "admin/users",
-            Component: AdminUserManagement,
+            element: <HomeShell />,
           },
           {
             path: "base",
-            element: <MainLayout />,
+            element: <AppShell />,
             children: [
               {
                 index: true,
@@ -66,6 +61,16 @@ export const router = createBrowserRouter([
               {
                 path: "analytics",
                 Component: AdminPanel,
+              },
+            ],
+          },
+          {
+            path: "admin",
+            element: <AppShell />,
+            children: [
+              {
+                path: "users",
+                Component: AdminUserManagement,
               },
             ],
           },

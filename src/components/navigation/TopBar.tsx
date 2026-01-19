@@ -36,13 +36,12 @@ export function TopBar({ onCreateOpportunity }: TopBarProps) {
       );
       setRecentActivityCount(recent.length);
     } catch (error) {
-      // Silently fail
     }
   };
 
   return (
     <div className="flex items-center justify-between px-6 py-3 border-b border-border bg-background">
-      {/* Left */}
+      {}
       <div className="flex items-center gap-4">
         <p className="text-xs text-muted-foreground uppercase tracking-wider">
           Buscar
@@ -64,9 +63,9 @@ export function TopBar({ onCreateOpportunity }: TopBarProps) {
         </button>
       </div>
 
-      {/* Right */}
+      {}
       <div className="flex items-center gap-3">
-        {/* Activity */}
+        {}
         {isAdmin && (
           <div className="relative group">
             <button className="p-2 hover:bg-accent rounded-lg transition-colors">
@@ -80,12 +79,12 @@ export function TopBar({ onCreateOpportunity }: TopBarProps) {
           </div>
         )}
 
-        {/* Notifications */}
+        {}
         <button className="p-2 hover:bg-accent rounded-lg transition-colors">
           <Bell className="w-5 h-5 text-muted-foreground" />
         </button>
 
-        {/* User */}
+        {}
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
@@ -142,7 +141,7 @@ export function TopBar({ onCreateOpportunity }: TopBarProps) {
           )}
         </div>
 
-        {/* Create */}
+        {}
         <button
           onClick={onCreateOpportunity}
           className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium text-sm"
@@ -154,3 +153,5 @@ export function TopBar({ onCreateOpportunity }: TopBarProps) {
     </div>
   );
 }
+
+

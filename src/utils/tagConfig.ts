@@ -1,4 +1,3 @@
-// Configuración de colores para tags usando Tailwind classes
 export const TAG_STYLES: Record<string, string> = {
   Nuevo: "bg-blue-500/15 text-blue-400 border-blue-500/30 hover:bg-blue-500/25",
   "Contactar Luego":
@@ -21,3 +20,5 @@ export const TAG_STYLES: Record<string, string> = {
 export const getTagStyle = (value: string) => {
   return TAG_STYLES[value] || TAG_STYLES["default"];
 };
+
+

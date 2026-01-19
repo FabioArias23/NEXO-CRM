@@ -17,7 +17,7 @@ import {
   PieChart as PieChartIcon,
   BarChart3,
 } from "lucide-react";
-// Solo importamos lo necesario para el AreaChart principal, el resto va en los componentes hijos
+
 import {
   AreaChart,
   Area,
@@ -55,7 +55,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background text-foreground p-6 md:p-8 overflow-y-auto pb-20">
-      {/* --- HEADER --- */}
+      {}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
         <div className="min-w-0">
           <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground truncate">
@@ -101,7 +101,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* --- KPI CARDS --- */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <KPICard
           title="Primas Emitidas"
@@ -138,9 +138,9 @@ export function Dashboard() {
         />
       </div>
 
-      {/* --- FILA 1: EVOLUCIÓN (AREA) + VENCIMIENTOS (LISTA) --- */}
+      {}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {/* Gráfico de Evolución de Primas */}
+        {}
         <div className="lg:col-span-2 bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-sm relative overflow-hidden group hover:border-input transition-colors">
           <div className="absolute top-0 right-0 w-64 h-64 bg-muted/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
 
@@ -222,7 +222,7 @@ export function Dashboard() {
           </div>
         </div>
 
-        {/* Lista de Vencimientos */}
+        {}
         <div className="bg-card border border-border rounded-2xl flex flex-col h-full overflow-hidden hover:border-input transition-colors min-h-[350px]">
           <div className="p-5 border-b border-border flex items-center justify-between bg-muted/20">
             <h3 className="h5 text-card-foreground flex items-center gap-2">
@@ -285,16 +285,16 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* --- FILA 2: DATA ANALYTICS (CORREGIDA) --- */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {/* Usamos el componente externo para arreglar el problema de superposición */}
+        {}
         <PortfolioDistributionCard data={distributionData} />
 
-        {/* Usamos el componente externo para el gráfico de barras */}
+        {}
         <SalesChannelChart data={channelData} />
       </div>
 
-      {/* --- RANKING ASESORES --- */}
+      {}
       <div className="bg-card border border-border rounded-xl p-4 sm:p-6 hover:border-input transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
           <h3 className="h4 text-card-foreground flex items-center gap-2">
@@ -339,7 +339,7 @@ export function Dashboard() {
   );
 }
 
-// --- SUBCOMPONENTES LOCALES ---
+
 
 interface KPICardProps {
   title: string;
@@ -363,13 +363,13 @@ function KPICard({
   accentColor,
 }: KPICardProps) {
   const isPositive = goodTrend ? trendUp : !trendUp;
-  // Usamos colores semánticos más vibrantes
+
   const trendColor = isPositive
     ? "text-emerald-400 bg-emerald-500/10 border border-emerald-500/20"
     : "text-rose-400 bg-rose-500/10 border border-rose-500/20";
   const TrendIcon = trendUp ? ArrowUpRight : ArrowDownRight;
 
-  // Mapas de colores para gradientes sutiles de fondo y bordes
+
   const styles = {
     blue: {
       bg: "from-gray-500/5 to-transparent",
@@ -403,21 +403,21 @@ function KPICard({
       ${style.border} group min-h-[140px] flex flex-col
     `}
     >
-      {/* Gradiente de fondo sutil al hacer hover */}
+      {}
       <div
         className={`absolute inset-0 bg-gradient-to-br ${style.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
       />
 
-      {/* Fila superior: Icono izquierda, Badge derecha - padding uniforme */}
+      {}
       <div className="relative z-10 flex justify-between items-start mb-auto">
-        {/* Icono en esquina superior izquierda */}
+        {}
         <div
           className={`p-3 rounded-xl ${style.icon} transition-transform group-hover:scale-110 duration-300 shrink-0`}
         >
           <Icon className="w-5 h-5" />
         </div>
 
-        {/* Badge de tendencia en esquina superior derecha */}
+        {}
         {trend && (
           <div
             className={`flex items-center gap-1 text-[11px] font-bold px-3 py-1.5 rounded-full ${trendColor} shrink-0`}
@@ -427,14 +427,14 @@ function KPICard({
         )}
       </div>
 
-      {/* Contenido inferior: DATO primero (grande y brillante), luego etiqueta (pequeña y apagada) */}
+      {}
       <div className="relative z-10 mt-4">
-        {/* EL DATO ES EL REY - Grande, brillante, peso visual máximo */}
+        {}
         <h3 className="text-numeric text-card-foreground mb-2 leading-none font-mono">
           {value}
         </h3>
 
-        {/* LA ETIQUETA ES SOPORTE - Pequeña, apagada, mayúsculas */}
+        {}
         <div className="flex items-center justify-between">
           <p className="text-micro text-muted-foreground">{title}</p>
           {subtext && (
@@ -502,3 +502,5 @@ function AdvisorCard({
     </div>
   );
 }
+
+

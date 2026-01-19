@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 
 import { adminQueries } from "../client/queries/admin.queries";
 import type {
@@ -40,3 +40,5 @@ export const adminService = {
     return data!;
   },
 };
+
+

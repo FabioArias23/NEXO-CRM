@@ -23,7 +23,7 @@ interface Props {
 export function SalesChannelChart({ data }: Props) {
   return (
     <div className="bg-card border border-border rounded-xl p-6 shadow-sm flex flex-col h-[350px]">
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <div className="flex items-center gap-2 min-w-0">
           <div className="p-2 bg-orange-500/10 rounded-lg border border-orange-500/20 shrink-0">
@@ -43,7 +43,7 @@ export function SalesChannelChart({ data }: Props) {
         </button>
       </div>
 
-      {/* Gráfico */}
+      {}
       <div className="flex-1 w-full min-h-0">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -94,3 +94,5 @@ export function SalesChannelChart({ data }: Props) {
     </div>
   );
 }
+
+

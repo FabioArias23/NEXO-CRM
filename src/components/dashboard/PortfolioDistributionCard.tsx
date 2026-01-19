@@ -17,7 +17,7 @@ export function PortfolioDistributionCard({ data }: Props) {
 
   return (
     <div className="bg-card border border-border rounded-xl p-6 shadow-sm flex flex-col h-[350px]">
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between mb-2 flex-shrink-0">
         <div className="flex items-center gap-2 min-w-0">
           <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/20 shrink-0">
@@ -37,9 +37,9 @@ export function PortfolioDistributionCard({ data }: Props) {
         </button>
       </div>
 
-      {/* Grid Layout */}
+      {}
       <div className="grid grid-cols-2 gap-6 flex-1 items-center min-h-0">
-        {/* COLUMNA 1: GRÁFICO */}
+        {}
         <div className="relative w-full h-full flex items-center justify-center">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -76,7 +76,7 @@ export function PortfolioDistributionCard({ data }: Props) {
             </PieChart>
           </ResponsiveContainer>
 
-          {/* Texto Central */}
+          {}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
             <span className="text-2xl font-bold text-white/90 tracking-tight font-mono">
               100%
@@ -87,7 +87,7 @@ export function PortfolioDistributionCard({ data }: Props) {
           </div>
         </div>
 
-        {/* COLUMNA 2: LEYENDA (Colores Arreglados) */}
+        {}
         <div className="space-y-3 flex flex-col justify-center pl-2">
           {data.map((item, i) => (
             <div
@@ -116,3 +116,5 @@ export function PortfolioDistributionCard({ data }: Props) {
     </div>
   );
 }
+
+

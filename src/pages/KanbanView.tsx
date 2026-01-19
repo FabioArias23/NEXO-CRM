@@ -30,7 +30,6 @@ const stages = [
   "Cerrado Perdido",
 ];
 
-// Colores para la barrita lateral de cada Stage (decorativo)
 const getStageAccentColor = (stage: string) => {
   const colors: Record<string, string> = {
     Prospecto: "border-gray-400",
@@ -142,11 +141,7 @@ function StageColumn({
 
   return (
     <div className="flex-shrink-0 w-72 sm:w-80 h-full flex flex-col min-w-0">
-      {/* 
-         CAMBIO PRINCIPAL: "LA CAJA"
-         Usamos bg-muted/50 (gris claro) para toda la columna.
-         Esto crea el efecto "carril" visualmente sólido.
-      */}
+      {}
       <div
         ref={drop as any}
         className={`
@@ -154,7 +149,7 @@ function StageColumn({
           ${isOver ? "ring-2 ring-primary/50 bg-primary/5" : ""}
         `}
       >
-        {/* Header de la Columna */}
+        {}
         <div
           className={`p-3 bg-background/50 border-b border-border backdrop-blur-sm sticky top-0 z-10 border-t-4 ${getStageAccentColor(stage)}`}
         >
@@ -174,7 +169,7 @@ function StageColumn({
           </div>
         </div>
 
-        {/* Cuerpo Scrollable */}
+        {}
         <div className="flex-1 p-2 overflow-y-auto custom-scrollbar">
           {opportunities.map((opp) => (
             <OpportunityCard
@@ -188,7 +183,7 @@ function StageColumn({
             />
           ))}
 
-          {/* Botón Añadir al final de la lista */}
+          {}
           <button
             onClick={onAddNew}
             className="w-full py-2 flex items-center justify-center gap-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-background/80 rounded-lg transition-colors mt-2 border border-transparent hover:border-border"
@@ -276,7 +271,7 @@ export function KanbanView() {
     <>
       <DndProvider backend={HTML5Backend}>
         <div className="p-4 sm:p-6 h-full flex flex-col bg-background text-foreground transition-colors duration-300">
-          {/* Header Superior */}
+          {}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4 sm:mb-6">
             <div className="min-w-0">
               <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-1 truncate">
@@ -358,7 +353,7 @@ export function KanbanView() {
             </div>
           )}
 
-          {/* ÁREA DE COLUMNAS (SCROLL HORIZONTAL) */}
+          {}
           <div className="flex-1 overflow-x-auto pb-2 -mx-6 px-6">
             <div className="flex gap-4 h-full min-w-max pb-2">
               {stages.map((stage) => (
@@ -386,3 +381,5 @@ export function KanbanView() {
     </>
   );
 }
+
+

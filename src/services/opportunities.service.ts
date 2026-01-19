@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { opportunitiesQueries } from "../client/queries/opportunities.queries";
 import type { Opportunity, OpportunityRow, ApiError } from "../core/types";
 
 export const opportunitiesService = {
-  /**
-   * Obtener todas las oportunidades del usuario
-   * Para admins, usar getAllForAdmin()
-   */
+  
   async getAll(userId: string): Promise<Opportunity[]> {
     try {
       return await opportunitiesQueries.getAll(userId);
@@ -15,9 +12,7 @@ export const opportunitiesService = {
     }
   },
 
-  /**
-   * Obtener todas las oportunidades (ADMIN)
-   */
+  
   async getAllForAdmin(): Promise<Opportunity[]> {
     try {
       return await opportunitiesQueries.getAllForAdmin();
@@ -34,11 +29,7 @@ export const opportunitiesService = {
     }
   },
 
-  /**
-   * Crear nueva oportunidad
-   * NOTA: Ya NO necesitamos pasar nombre/email del owner
-   * porque se obtienen automáticamente con JOIN
-   */
+  
   async create(
     userId: string,
     data: Omit<
@@ -61,9 +52,7 @@ export const opportunitiesService = {
     }
   },
 
-  /**
-   * Actualizar oportunidad existente
-   */
+  
   async update(
     id: string,
     userId: string,
@@ -99,7 +88,6 @@ export const opportunitiesService = {
     return opportunitiesQueries.onChanges(userId, callback);
   },
 
-  // ✅ LÓGICA DE NEGOCIO
   _validateOpportunity(data: Partial<OpportunityRow>) {
     if (data.name !== undefined && (!data.name || data.name.length < 3)) {
       throw new Error("Nombre debe tener ≥ 3 caracteres");
@@ -123,3 +111,5 @@ export const opportunitiesService = {
     };
   },
 };
+
+

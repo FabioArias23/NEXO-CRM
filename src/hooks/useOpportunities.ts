@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { opportunitiesService } from "../services/opportunities.service";
@@ -90,3 +90,5 @@ export function useOpportunities() {
     deleteOpportunity,
   };
 }
+
+

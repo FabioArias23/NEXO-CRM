@@ -25,7 +25,7 @@ export function Sidebar() {
 
   return (
     <div className="w-64 bg-background border-r border-border flex flex-col h-screen flex-shrink-0 z-20 relative transition-colors duration-300">
-      {/* BOTÓN VOLVER AL LOBBY */}
+      {}
       <div className="px-4 pt-4">
         <button
           onClick={() => navigate("/")}
@@ -36,10 +36,10 @@ export function Sidebar() {
         </button>
       </div>
 
-      {/* HEADER LOGO */}
+      {}
       <div className="p-6 pb-4 border-b border-border bg-background transition-colors duration-300">
         <div className="flex items-center gap-3">
-          {/* Logo invierte colores según el tema: Fondo negro/icono blanco en Light, Fondo blanco/icono negro en Dark */}
+          {}
           <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center shadow-sm shrink-0">
             <ShieldCheck className="w-6 h-6 text-background" />
           </div>
@@ -54,7 +54,7 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* NAVEGACIÓN */}
+      {}
       <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
         <p className="px-2 mb-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
           Gestión Operativa
@@ -79,7 +79,7 @@ export function Sidebar() {
           </NavLink>
         ))}
 
-        {/* Sección Admin */}
+        {}
         {isAdmin && (
           <>
             <div className="my-4 border-t border-border mx-2" />
@@ -105,7 +105,7 @@ export function Sidebar() {
         )}
       </nav>
 
-      {/* FOOTER USUARIO */}
+      {}
       <div className="p-4 border-t border-border bg-background transition-colors duration-300">
         <div className="p-3 rounded-xl bg-card border border-border mb-3 hover:border-input transition-colors shadow-sm">
           <div className="flex items-center gap-3 min-w-0">
@@ -139,3 +139,5 @@ export function Sidebar() {
     </div>
   );
 }
+
+

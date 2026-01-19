@@ -8,7 +8,6 @@ export function ToolsMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Cerrar al clickear fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -55,7 +54,7 @@ export function ToolsMenu() {
 
   return (
     <div className="relative" ref={menuRef}>
-      {/* BOTÓN TRIGGER */}
+      {}
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${isOpen ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
@@ -64,7 +63,7 @@ export function ToolsMenu() {
         <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {/* MODAL FLOTANTE */}
+      {}
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-80 bg-[#121212] border border-gray-800 rounded-xl shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-200 overflow-hidden">
           <div className="p-3 bg-gray-950 border-b border-gray-800">
@@ -107,3 +106,5 @@ export function ToolsMenu() {
     </div>
   );
 }
+
+

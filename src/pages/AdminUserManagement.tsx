@@ -20,7 +20,7 @@ export function AdminUserManagement() {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
-      {/* Header Admin */}
+      {}
       <div className="h-14 sm:h-16 border-b border-gray-900 bg-black sticky top-0 z-10">
         <div className="h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
@@ -65,7 +65,7 @@ export function AdminUserManagement() {
         </div>
       </div>
 
-      {/* Contenido */}
+      {}
       <div className="flex-1 p-4 sm:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto w-full space-y-4 sm:space-y-6">
           <div className="space-y-1 sm:space-y-2">
@@ -78,7 +78,7 @@ export function AdminUserManagement() {
             </p>
           </div>
 
-          {/* Mobile Search */}
+          {}
           <div className="relative sm:hidden">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             <input
@@ -88,7 +88,7 @@ export function AdminUserManagement() {
             />
           </div>
 
-          {/* Desktop Table */}
+          {}
           <div className="hidden lg:block border border-gray-800 rounded-xl overflow-hidden bg-gray-950">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
@@ -177,7 +177,7 @@ export function AdminUserManagement() {
             </div>
           </div>
 
-          {/* Mobile/Tablet Cards */}
+          {}
           <div className="lg:hidden space-y-3">
             {users.map((user) => (
               <div
@@ -242,7 +242,7 @@ export function AdminUserManagement() {
         </div>
       </div>
 
-      {/* Modal Invitación */}
+      {}
       {showModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
           <div className="bg-gray-950 border border-gray-800 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden">
@@ -300,3 +300,5 @@ export function AdminUserManagement() {
     </div>
   );
 }
+
+

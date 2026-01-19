@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useState, useMemo } from "react";
 import dashboardMockData from "../data/mocks/dashboard.json";
 import type { KPIMetrics, Renewal } from "../core/types";
@@ -69,3 +69,5 @@ export function useDashboardData() {
     exportToExcel,
   };
 }
+
+

@@ -1,7 +1,6 @@
 import { supabase } from "../supabase";
 import type { UserRole } from "../../core/types";
 
-// Helper para timeout
 const withTimeout = <T>(promise: Promise<T>, ms: number): Promise<T> => {
   return Promise.race([
     promise,
@@ -69,3 +68,5 @@ export const authQueries = {
     return () => subscription?.unsubscribe();
   },
 };
+
+

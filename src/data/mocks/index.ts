@@ -1,4 +1,3 @@
-// Centralización de todos los datos mock del proyecto
 import dashboardData from './dashboard.json';
 import consultoriaData from './consultoria.json';
 import crmData from './crm.json';
@@ -13,3 +12,5 @@ export const mockData = {
 
 export type { KPIMetrics, Renewal } from '../../hooks/useDashboardData';
 export type { ClientRecord } from '../../components/modals/RecordDrawer';
+
+

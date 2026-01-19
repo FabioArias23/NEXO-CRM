@@ -25,7 +25,7 @@ import React, { useMemo, useState } from "react";
 import { ClientRecord, RecordDrawer } from "../components/modals/RecordDrawer";
 import consultoriaMockData from "../data/mocks/consultoria.json";
 
-// --- CONFIGURACIÓN DE COLUMNAS ---
+
 interface ColumnDef {
   key: keyof ClientRecord;
   label: string;
@@ -119,7 +119,7 @@ const VIEWS_CONFIG: ViewConfig[] = [
 ];
 
 export function ConsultoriaView() {
-  // Estados
+
   const [records, setRecords] = useState<ClientRecord[]>(
     consultoriaMockData.clients as ClientRecord[],
   );
@@ -147,7 +147,7 @@ export function ConsultoriaView() {
     );
   }, [activeViewId]);
 
-  // --- LÓGICA DE DATOS ---
+
   const processedRecords = useMemo(() => {
     let data = [...records];
 
@@ -273,9 +273,9 @@ export function ConsultoriaView() {
   };
 
   return (
-    // CAMBIO: Fondo semántico
+
     <div className="flex flex-col h-full bg-background text-foreground font-sans overflow-hidden transition-colors duration-300">
-      {/* 1. TOP BAR DE LA BASE */}
+      {}
       <div className="h-14 md:h-12 border-b border-border flex items-center justify-between px-4 bg-background flex-shrink-0">
         <div className="flex items-center gap-2 md:gap-4 overflow-hidden">
           <button
@@ -309,7 +309,7 @@ export function ConsultoriaView() {
         </div>
       </div>
 
-      {/* 2. SUB-BARRA DE VISTAS */}
+      {}
       <div className="h-10 border-b border-border flex items-center px-2 bg-background overflow-x-auto scrollbar-hide flex-shrink-0">
         {VIEWS_CONFIG.slice(0, 3).map((view) => (
           <ViewTab
@@ -327,9 +327,9 @@ export function ConsultoriaView() {
         </button>
       </div>
 
-      {/* 3. ÁREA PRINCIPAL */}
+      {}
       <div className="flex flex-1 overflow-hidden relative">
-        {/* SIDEBAR DE VISTAS (Desktop) */}
+        {}
         <aside className="w-60 border-r border-border bg-card flex flex-col flex-shrink-0 hidden md:flex">
           <div className="p-3">
             <div className="relative">
@@ -380,9 +380,9 @@ export function ConsultoriaView() {
           </div>
         </aside>
 
-        {/* CONTENIDO CENTRAL */}
+        {}
         <main className="flex-1 flex flex-col min-w-0 bg-background relative">
-          {/* TOOLBAR HERRAMIENTAS */}
+          {}
           <div className="h-12 border-b border-border flex items-center justify-between px-4 bg-background overflow-x-auto scrollbar-hide flex-shrink-0">
             <div className="flex items-center gap-2 pr-4">
               <button className="flex items-center gap-1 px-2 py-1 hover:bg-accent rounded text-xs font-medium text-foreground whitespace-nowrap transition-colors">
@@ -392,7 +392,7 @@ export function ConsultoriaView() {
               </button>
               <div className="h-4 w-px bg-border mx-1 flex-shrink-0"></div>
 
-              {/* Botón Ocultar Campos */}
+              {}
               <div className="relative">
                 <button
                   onClick={() => setShowColumnMenu(!showColumnMenu)}
@@ -460,7 +460,7 @@ export function ConsultoriaView() {
             </div>
           </div>
 
-          {/* GRILLA (TABLA) */}
+          {}
           <div className="flex-1 overflow-auto bg-background relative">
             <table className="w-full border-collapse text-xs table-fixed">
               <thead className="sticky top-0 z-10 bg-background border-b border-border shadow-sm">
@@ -497,7 +497,7 @@ export function ConsultoriaView() {
                           count={group.items.length}
                           isExpanded={!collapsedGroups[group.groupName]}
                           onToggle={() => toggleGroupCollapse(group.groupName)}
-                          // CAMBIO: Colores duales para light/dark
+
                           color={
                             group.groupName === "Contactar Luego"
                               ? "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20"
@@ -524,7 +524,7 @@ export function ConsultoriaView() {
                   </React.Fragment>
                 ))}
 
-                {/* Filas vacías */}
+                {}
                 {[...Array(5)].map((_, i) => (
                   <tr key={`empty-${i}`} className="border-b border-border h-8">
                     <td className="border-r border-border bg-muted/5 sticky left-0 z-10"></td>
@@ -538,7 +538,7 @@ export function ConsultoriaView() {
             </table>
           </div>
 
-          {/* FOOTER */}
+          {}
           <div className="h-10 border-t border-border bg-background flex items-center px-4 text-xs text-muted-foreground gap-4 flex-shrink-0">
             <div
               onClick={handleAddRecord}
@@ -560,7 +560,7 @@ export function ConsultoriaView() {
         </main>
       </div>
 
-      {/* --- MENU MÓVIL --- */}
+      {}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex">
           <div
@@ -603,7 +603,7 @@ export function ConsultoriaView() {
   );
 }
 
-// --- SUBCOMPONENTES ---
+
 
 function TabButton({
   children,
@@ -905,8 +905,10 @@ function TableRow({ row, visibleColumns, onClick, onUpdate }: any) {
           {renderCell(colKey)}
         </td>
       ))}
-      {/* Celda vacía al final */}
+      {}
       <td></td>
     </tr>
   );
 }
+
+

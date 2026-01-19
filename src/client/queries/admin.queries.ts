@@ -1,10 +1,7 @@
 import { supabase } from "../supabase";
 
 export const adminQueries = {
-  /**
-   * Obtener logs de actividad del sistema
-   * Requiere: RLS configurado para que solo admins puedan leer
-   */
+  
   async getActivities() {
     const { data, error } = await supabase
       .from("activity_logs")
@@ -20,10 +17,7 @@ export const adminQueries = {
     return { data, error };
   },
 
-  /**
-   * Obtener estadísticas de usuarios con sus oportunidades
-   * Usa JOIN entre users y opportunities
-   */
+  
   async getUserStats() {
     const { data, error } = await supabase
       .from("users")
@@ -42,10 +36,7 @@ export const adminQueries = {
     return { data, error };
   },
 
-  /**
-   * Obtener estadísticas globales del sistema
-   * Combina múltiples queries
-   */
+  
   async getStats() {
     const [usersResult, oppsResult] = await Promise.all([
       supabase.from("users").select("id", { count: "exact", head: true }),
@@ -93,3 +84,5 @@ export const adminQueries = {
     };
   },
 };
+
+

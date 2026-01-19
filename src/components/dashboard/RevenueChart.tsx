@@ -102,3 +102,5 @@ export function RevenueChart({ opportunities }: RevenueChartProps) {
     </div>
   );
 }
+
+

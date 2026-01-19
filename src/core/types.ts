@@ -1,8 +1,8 @@
-// Types
 
-// ==================================================================
-// 1. Enums y Tipos Globales
-// ==================================================================
+
+
+
+
 
 export type UserRole = "admin" | "employee";
 
@@ -16,7 +16,6 @@ export type OpportunityStage =
 
 export type ActionType = "create" | "update" | "delete";
 
-// Helper para campos JSON de Supabase
 export type Json =
   | string
   | number
@@ -25,14 +24,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-// ==================================================================
-// 2. Tablas Base (Tal cual están en Supabase)
-// ==================================================================
 
-/**
- * Tabla: public.users
- * Perfil extendido del usuario (sincronizado con auth.users)
- */
 export interface UserRow {
   id: string;
   email: string;
@@ -43,13 +35,9 @@ export interface UserRow {
   updated_at: string;
 }
 
-/**
- * Tabla: public.opportunities
- * Oportunidades de negocio (NORMALIZADA - solo IDs de usuarios)
- */
+
 export interface OpportunityRow {
   id: string;
-  // Datos principales
   name: string;
   company: string;
   contact: string;
@@ -57,19 +45,14 @@ export interface OpportunityRow {
   stage: OpportunityStage;
   probability: number;
   description: string | null;
-  // Fechas
   close_date: string | null;
   created_at: string;
   updated_at: string;
-  // Claves foráneas (SOLO IDs)
   owner_id: string;
   last_modified_by: string | null;
 }
 
-/**
- * Tabla: public.activity_logs
- * Registro de auditoría del sistema
- */
+
 export interface ActivityLogRow {
   id: string;
   user_id: string;
@@ -80,14 +63,7 @@ export interface ActivityLogRow {
   created_at: string;
 }
 
-// ==================================================================
-// 3. Tipos Expandidos (Para uso en UI con JOINs)
-// ==================================================================
 
-/**
- * Usa este tipo cuando hagas queries con join a usuarios.
- * Ejemplo: .select('*, owner:users!owner_id(name, email)')
- */
 export interface Opportunity extends OpportunityRow {
   owner?: {
     name: string;
@@ -100,10 +76,7 @@ export interface Opportunity extends OpportunityRow {
   } | null;
 }
 
-/**
- * Usa este tipo para mostrar logs en el Admin Panel.
- * Ejemplo: .select('*, users(name, email, role)')
- */
+
 export interface ActivityLog extends ActivityLogRow {
   users?: {
     name: string;
@@ -112,24 +85,13 @@ export interface ActivityLog extends ActivityLogRow {
   } | null;
 }
 
-// ==================================================================
-// 4. Tipos para Auth Context (Simplificados)
-// ==================================================================
 
-/**
- * Tipo de usuario para Auth Context
- * Solo incluye campos esenciales (sin created_at, updated_at, is_active)
- */
 export interface User {
   id: string;
   email: string;
   name: string;
   role: UserRole;
 }
-
-// ==================================================================
-// 5. Respuestas de API y Auth
-// ==================================================================
 
 export interface AuthResponse {
   user: User;
@@ -142,10 +104,6 @@ export interface ApiError {
   details?: unknown;
   hint?: string;
 }
-
-// ==================================================================
-// 6. Métricas y Dashboard
-// ==================================================================
 
 export interface DashboardMetrics {
   totalRevenue: number;
@@ -176,10 +134,6 @@ export interface Renewal {
   premium?: number;
   risk: "high" | "medium" | "low";
 }
-
-// ==================================================================
-// 7. Admin y Estadísticas
-// ==================================================================
 
 export interface AdminActivityLog {
   id: string;
@@ -223,13 +177,9 @@ export interface AdminStats {
   }>;
 }
 
-// ==================================================================
-// 8. UI y Componentes
-// ==================================================================
-
 export interface Toast {
   id: string;
-  type: 'success' | 'error' | 'warning' | 'info';
+  type: "success" | "error" | "warning" | "info";
   message: string;
   duration?: number;
 }
@@ -261,3 +211,5 @@ export interface FilterRule {
   operator: string;
   value: string;
 }
+
+

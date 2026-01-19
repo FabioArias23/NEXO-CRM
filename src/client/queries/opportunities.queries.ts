@@ -2,10 +2,7 @@ import { supabase } from "../supabase";
 import { Opportunity, OpportunityRow } from "../../core/types";
 
 export const opportunitiesQueries = {
-  /**
-   * Obtener todas las oportunidades del usuario actual
-   * Con JOIN para traer datos del owner (nombre, email)
-   */
+  
   async getAll(userId: string): Promise<Opportunity[]> {
     const { data, error } = await supabase
       .from("opportunities")
@@ -22,10 +19,7 @@ export const opportunitiesQueries = {
     return data || [];
   },
 
-  /**
-   * Obtener todas las oportunidades (ADMIN)
-   * Los admins ven todas las oportunidades gracias a RLS
-   */
+  
   async getAllForAdmin(): Promise<Opportunity[]> {
     const { data, error } = await supabase
       .from("opportunities")
@@ -42,9 +36,7 @@ export const opportunitiesQueries = {
     return data || [];
   },
 
-  /**
-   * Obtener una oportunidad por ID con datos del owner
-   */
+  
   async getById(id: string): Promise<Opportunity> {
     const { data, error } = await supabase
       .from("opportunities")
@@ -61,10 +53,7 @@ export const opportunitiesQueries = {
     return data;
   },
 
-  /**
-   * Crear nueva oportunidad
-   * Los campos created_at y updated_at se generan automáticamente
-   */
+  
   async create(opportunity: Partial<OpportunityRow>): Promise<Opportunity> {
     const { data: result, error } = await supabase
       .from("opportunities")
@@ -81,10 +70,7 @@ export const opportunitiesQueries = {
     return result;
   },
 
-  /**
-   * Actualizar oportunidad existente
-   * El campo updated_at se actualiza automáticamente con el trigger
-   */
+  
   async update(
     id: string,
     updates: Partial<OpportunityRow>,
@@ -105,9 +91,7 @@ export const opportunitiesQueries = {
     return data;
   },
 
-  /**
-   * Eliminar oportunidad (solo ADMIN según RLS)
-   */
+  
   async delete(id: string): Promise<void> {
     const { error } = await supabase
       .from("opportunities")
@@ -117,9 +101,7 @@ export const opportunitiesQueries = {
     if (error) throw error;
   },
 
-  /**
-   * Suscripción en tiempo real a cambios en oportunidades
-   */
+  
   onChanges(userId: string, callback: (opp: Opportunity) => void) {
     const channel = supabase
       .channel("opportunities-changes")
@@ -142,3 +124,5 @@ export const opportunitiesQueries = {
     };
   },
 };
+
+

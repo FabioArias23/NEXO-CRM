@@ -190,3 +190,5 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
     </div>
   );
 }
+
+
