@@ -1,8 +1,7 @@
 import { supabase } from "../supabase";
-import { Opportunity, OpportunityRow } from "../../core/types";
+import type { Opportunity, OpportunityRow } from "../../core/types";
 
 export const opportunitiesQueries = {
-  
   async getAll(userId: string): Promise<Opportunity[]> {
     const { data, error } = await supabase
       .from("opportunities")
@@ -19,7 +18,6 @@ export const opportunitiesQueries = {
     return data || [];
   },
 
-  
   async getAllForAdmin(): Promise<Opportunity[]> {
     const { data, error } = await supabase
       .from("opportunities")
@@ -36,7 +34,6 @@ export const opportunitiesQueries = {
     return data || [];
   },
 
-  
   async getById(id: string): Promise<Opportunity> {
     const { data, error } = await supabase
       .from("opportunities")
@@ -53,7 +50,6 @@ export const opportunitiesQueries = {
     return data;
   },
 
-  
   async create(opportunity: Partial<OpportunityRow>): Promise<Opportunity> {
     const { data: result, error } = await supabase
       .from("opportunities")
@@ -70,7 +66,6 @@ export const opportunitiesQueries = {
     return result;
   },
 
-  
   async update(
     id: string,
     updates: Partial<OpportunityRow>,
@@ -91,7 +86,6 @@ export const opportunitiesQueries = {
     return data;
   },
 
-  
   async delete(id: string): Promise<void> {
     const { error } = await supabase
       .from("opportunities")
@@ -101,7 +95,6 @@ export const opportunitiesQueries = {
     if (error) throw error;
   },
 
-  
   onChanges(userId: string, callback: (opp: Opportunity) => void) {
     const channel = supabase
       .channel("opportunities-changes")
@@ -124,5 +117,3 @@ export const opportunitiesQueries = {
     };
   },
 };
-
-
