@@ -1,12 +1,14 @@
-import { RouterProvider } from 'react-router';
-import { AuthProvider } from './contexts/AuthContext';
-import { router } from './utils/routes';
-import './styles/globals.css';
+import { RouterProvider } from "react-router";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ModalProvider } from "./contexts/ModalContext";
+import { router } from "./utils/routes";
 
 export default function App() {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ModalProvider>
+        <RouterProvider router={router} />
+      </ModalProvider>
     </AuthProvider>
   );
 }

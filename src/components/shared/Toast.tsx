@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
-import { CheckCircle, XCircle, AlertCircle, Info, X } from 'lucide-react';
+import { useEffect } from "react";
+import { CheckCircle, XCircle, AlertCircle, Info, X } from "lucide-react";
+import type { Toast } from "../../core/types";
 
-export interface ToastProps {
-  id: string;
-  type: 'success' | 'error' | 'warning' | 'info';
-  message: string;
-  duration?: number;
+export interface ToastProps extends Toast {
   onClose: (id: string) => void;
 }
 
-export function Toast({ id, type, message, duration = 5000, onClose }: ToastProps) {
+export function Toast({
+  id,
+  type,
+  message,
+  duration = 5000,
+  onClose,
+}: ToastProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose(id);
@@ -26,10 +29,10 @@ export function Toast({ id, type, message, duration = 5000, onClose }: ToastProp
   };
 
   const colors = {
-    success: 'border-green-400/20 bg-green-400/10',
-    error: 'border-red-400/20 bg-red-400/10',
-    warning: 'border-yellow-400/20 bg-yellow-400/10',
-    info: 'border-blue-400/20 bg-blue-400/10',
+    success: "border-green-400/20 bg-green-400/10",
+    error: "border-red-400/20 bg-red-400/10",
+    warning: "border-yellow-400/20 bg-yellow-400/10",
+    info: "border-blue-400/20 bg-blue-400/10",
   };
 
   return (
@@ -48,7 +51,13 @@ export function Toast({ id, type, message, duration = 5000, onClose }: ToastProp
   );
 }
 
-export function ToastContainer({ toasts, onClose }: { toasts: ToastProps[]; onClose: (id: string) => void }) {
+export function ToastContainer({
+  toasts,
+  onClose,
+}: {
+  toasts: ToastProps[];
+  onClose: (id: string) => void;
+}) {
   return (
     <div className="fixed top-6 right-6 z-50 space-y-3 max-w-md">
       {toasts.map((toast) => (
@@ -57,3 +66,5 @@ export function ToastContainer({ toasts, onClose }: { toasts: ToastProps[]; onCl
     </div>
   );
 }
+
+

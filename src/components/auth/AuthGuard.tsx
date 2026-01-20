@@ -22,3 +22,5 @@ export function AuthGuard() {
 
   return <Outlet />;
 }
+
+

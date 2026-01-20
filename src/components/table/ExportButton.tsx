@@ -1,29 +1,32 @@
-import { Download } from 'lucide-react';
-import { Opportunity } from '../../hooks/useOpportunities';
+import { Download } from "lucide-react";
+import { Opportunity } from "../../core/types";
 
 interface ExportButtonProps {
   opportunities: Opportunity[];
   filename?: string;
 }
 
-export function ExportButton({ opportunities, filename = 'opportunities' }: ExportButtonProps) {
+export function ExportButton({
+  opportunities,
+  filename = "opportunities",
+}: ExportButtonProps) {
   const exportToCSV = () => {
     const headers = [
-      'Nombre',
-      'Valor',
-      'Probabilidad',
-      'Etapa',
-      'Empresa',
-      'Contacto',
-      'Propietario',
-      'Email Propietario',
-      'Fecha de Cierre',
-      'Creado',
-      'Última Modificación',
-      'Modificado Por',
+      "Nombre",
+      "Valor",
+      "Probabilidad",
+      "Etapa",
+      "Empresa",
+      "Contacto",
+      "Propietario",
+      "Email Propietario",
+      "Fecha de Cierre",
+      "Creado",
+      "Última Modificación",
+      "Modificado Por",
     ];
 
-    const rows = opportunities.map(opp => [
+    const rows = opportunities.map((opp) => [
       opp.name,
       opp.value,
       opp.probability,
@@ -39,18 +42,21 @@ export function ExportButton({ opportunities, filename = 'opportunities' }: Expo
     ]);
 
     const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(',')),
-    ].join('\n');
+      headers.join(","),
+      ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
+    ].join("\n");
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
-    
-    link.setAttribute('href', url);
-    link.setAttribute('download', `${filename}_${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = 'hidden';
-    
+
+    link.setAttribute("href", url);
+    link.setAttribute(
+      "download",
+      `${filename}_${new Date().toISOString().split("T")[0]}.csv`,
+    );
+    link.style.visibility = "hidden";
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -59,11 +65,13 @@ export function ExportButton({ opportunities, filename = 'opportunities' }: Expo
   return (
     <button
       onClick={exportToCSV}
-      className="flex items-center gap-2 px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-900 transition-colors text-gray-400 hover:text-white"
+      className="flex items-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground whitespace-nowrap"
       title="Exportar a CSV"
     >
-      <Download className="w-5 h-5" />
+      <Download className="w-5 h-5 shrink-0" />
       <span className="hidden sm:inline">Exportar</span>
     </button>
   );
 }
+
+

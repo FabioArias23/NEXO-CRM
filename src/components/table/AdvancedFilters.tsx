@@ -1,12 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
-import { Filter, X, Plus } from 'lucide-react';
+import { useState, useRef, useEffect } from "react";
+import { Filter, X, Plus } from "lucide-react";
+import type { FilterRule } from "../../core/types";
 
-export interface FilterRule {
-  id: string;
-  field: string;
-  operator: string;
-  value: string;
-}
+export type { FilterRule };
 
 interface AdvancedFiltersProps {
   onApply: (filters: FilterRule[]) => void;
@@ -14,20 +10,20 @@ interface AdvancedFiltersProps {
 }
 
 const fields = [
-  { value: 'name', label: 'Nombre' },
-  { value: 'company', label: 'Empresa' },
-  { value: 'stage', label: 'Etapa' },
-  { value: 'value', label: 'Valor' },
-  { value: 'probability', label: 'Probabilidad' },
-  { value: 'contact', label: 'Contacto' },
-  { value: 'ownerName', label: 'Propietario' },
+  { value: "name", label: "Nombre" },
+  { value: "company", label: "Empresa" },
+  { value: "stage", label: "Etapa" },
+  { value: "value", label: "Valor" },
+  { value: "probability", label: "Probabilidad" },
+  { value: "contact", label: "Contacto" },
+  { value: "ownerName", label: "Propietario" },
 ];
 
 const operators = [
-  { value: 'contains', label: 'Contiene' },
-  { value: 'equals', label: 'Igual a' },
-  { value: 'greater', label: 'Mayor que' },
-  { value: 'less', label: 'Menor que' },
+  { value: "contains", label: "Contiene" },
+  { value: "equals", label: "Igual a" },
+  { value: "greater", label: "Mayor que" },
+  { value: "less", label: "Menor que" },
 ];
 
 export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
@@ -42,8 +38,8 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const addFilter = () => {
@@ -51,23 +47,23 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
       ...filters,
       {
         id: Math.random().toString(),
-        field: 'name',
-        operator: 'contains',
-        value: '',
+        field: "name",
+        operator: "contains",
+        value: "",
       },
     ]);
   };
 
   const removeFilter = (id: string) => {
-    setFilters(filters.filter(f => f.id !== id));
+    setFilters(filters.filter((f) => f.id !== id));
   };
 
   const updateFilter = (id: string, updates: Partial<FilterRule>) => {
-    setFilters(filters.map(f => (f.id === id ? { ...f, ...updates } : f)));
+    setFilters(filters.map((f) => (f.id === id ? { ...f, ...updates } : f)));
   };
 
   const handleApply = () => {
-    onApply(filters.filter(f => f.value));
+    onApply(filters.filter((f) => f.value));
     setIsOpen(false);
   };
 
@@ -83,8 +79,8 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-2 px-4 py-2 border rounded-lg transition-colors ${
           filters.length > 0
-            ? 'border-white bg-white text-black'
-            : 'border-gray-800 hover:bg-gray-900 text-gray-400 hover:text-white'
+            ? "border-white bg-white text-black"
+            : "border-gray-800 hover:bg-gray-900 text-gray-400 hover:text-white"
         }`}
         title="Filtros Avanzados"
       >
@@ -115,7 +111,9 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
                 className="bg-black border border-gray-800 rounded-lg p-3 space-y-2"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-gray-500">Filtro {index + 1}</span>
+                  <span className="text-xs text-gray-500">
+                    Filtro {index + 1}
+                  </span>
                   <button
                     onClick={() => removeFilter(filter.id)}
                     className="text-gray-500 hover:text-white transition-colors"
@@ -126,10 +124,12 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
 
                 <select
                   value={filter.field}
-                  onChange={(e) => updateFilter(filter.id, { field: e.target.value })}
+                  onChange={(e) =>
+                    updateFilter(filter.id, { field: e.target.value })
+                  }
                   className="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded text-sm text-white focus:outline-none focus:border-gray-600"
                 >
-                  {fields.map(field => (
+                  {fields.map((field) => (
                     <option key={field.value} value={field.value}>
                       {field.label}
                     </option>
@@ -138,10 +138,12 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
 
                 <select
                   value={filter.operator}
-                  onChange={(e) => updateFilter(filter.id, { operator: e.target.value })}
+                  onChange={(e) =>
+                    updateFilter(filter.id, { operator: e.target.value })
+                  }
                   className="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded text-sm text-white focus:outline-none focus:border-gray-600"
                 >
-                  {operators.map(op => (
+                  {operators.map((op) => (
                     <option key={op.value} value={op.value}>
                       {op.label}
                     </option>
@@ -151,7 +153,9 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
                 <input
                   type="text"
                   value={filter.value}
-                  onChange={(e) => updateFilter(filter.id, { value: e.target.value })}
+                  onChange={(e) =>
+                    updateFilter(filter.id, { value: e.target.value })
+                  }
                   placeholder="Valor..."
                   className="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gray-600"
                 />
@@ -186,3 +190,5 @@ export function AdvancedFilters({ onApply, onClear }: AdvancedFiltersProps) {
     </div>
   );
 }
+
+

@@ -13,7 +13,6 @@ export function TagSelector({ value, options, onChange, readOnly = false }: TagS
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Cerrar al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -35,7 +34,7 @@ export function TagSelector({ value, options, onChange, readOnly = false }: TagS
         className="relative w-full h-full flex items-center"
         onClick={(e) => e.stopPropagation()} // Vital: evita abrir el Drawer del cliente
     >
-      {/* 1. VISUALIZACIÓN (El Chip) */}
+      {}
       <div 
         onClick={() => !readOnly && setIsOpen(!isOpen)}
         className={`
@@ -48,7 +47,7 @@ export function TagSelector({ value, options, onChange, readOnly = false }: TagS
         {!readOnly && <ChevronDown className="w-3 h-3 ml-1 opacity-50" />}
       </div>
 
-      {/* 2. DROPDOWN FLOTANTE (El Selector) */}
+      {}
       {isOpen && (
         <div className="absolute top-full left-0 mt-2 w-56 bg-[#1a1a1a] border border-gray-800 rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100 origin-top-left">
           <div className="p-1 max-h-60 overflow-y-auto custom-scrollbar">
@@ -63,7 +62,7 @@ export function TagSelector({ value, options, onChange, readOnly = false }: TagS
                 `}
               >
                 <div className="flex items-center gap-2">
-                   {/* Mini dot de color en el dropdown */}
+                   {}
                    <div className={`w-2 h-2 rounded-full ${getTagStyle(option).split(' ')[0].replace('/15','').replace('/20','')}`}></div>
                    {option}
                 </div>
@@ -76,3 +75,5 @@ export function TagSelector({ value, options, onChange, readOnly = false }: TagS
     </div>
   );
 }
+
+

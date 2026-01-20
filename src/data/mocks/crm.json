@@ -1,0 +1,44 @@
+{
+  "records": [
+    {
+      "id": 1,
+      "fecha": "2024-12-01",
+      "cliente": "Tech Solutions SA",
+      "contacto": "Juan Pérez",
+      "telefono": "+54 9 11 1234 5678",
+      "status": "Nuevo"
+    },
+    {
+      "id": 2,
+      "fecha": "2024-12-02",
+      "cliente": "Logística Norte",
+      "contacto": "María Gonzalez",
+      "telefono": "+54 9 11 8765 4321",
+      "status": "Contactar Luego"
+    },
+    {
+      "id": 3,
+      "fecha": "2024-12-03",
+      "cliente": "Consultora Integral",
+      "contacto": "Carlos Ruiz",
+      "telefono": "+54 9 11 1111 2222",
+      "status": "Nuevo"
+    },
+    {
+      "id": 4,
+      "fecha": "2024-12-04",
+      "cliente": "Agro Export",
+      "contacto": "Ana Silva",
+      "telefono": "+54 9 11 3333 4444",
+      "status": "Cerrado Ganado"
+    },
+    {
+      "id": 5,
+      "fecha": "2024-12-05",
+      "cliente": "Innovación Web",
+      "contacto": "Pedro Diaz",
+      "telefono": "+54 9 11 5555 6666",
+      "status": "En Proceso"
+    }
+  ]
+}

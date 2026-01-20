@@ -1,17 +1,18 @@
-import { useState } from 'react';
-import { Navigate } from 'react-router';
-import { useAuth } from '../contexts/AuthContext';
-import { TrendingUp, Loader2, AlertCircle } from 'lucide-react';
+import { useState } from "react";
+import { Navigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
+import { TrendingUp, Loader2, AlertCircle } from "lucide-react";
+import type { UserRole } from "../core/types";
 
 export function LoginPage() {
   const { user, signIn, signUp } = useAuth();
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [role, setRole] = useState<'admin' | 'employee'>('employee');
+  const [mode, setMode] = useState<"signin" | "signup">("signup");
+  const [email, setEmail] = useState("admin@overseer.com");
+  const [password, setPassword] = useState("Admin123!@#");
+  const [name, setName] = useState("Admin Overseer");
+  const [role, setRole] = useState<UserRole>("admin");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   if (user) {
     return <Navigate to="/" replace />;
@@ -19,17 +20,28 @@ export function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
+    console.log("🔐 Intentando autenticación:", {
+      mode,
+      email,
+      hasPassword: !!password,
+    });
+
     try {
-      if (mode === 'signin') {
+      if (mode === "signin") {
+        console.log("📧 Login...");
         await signIn(email, password);
+        console.log("✅ Login exitoso");
       } else {
+        console.log("📝 Signup...", { name, role });
         await signUp(email, password, name, role);
+        console.log("✅ Signup exitoso");
       }
     } catch (err: any) {
-      setError(err.message || 'Autenticación fallida');
+      console.error("❌ Error de autenticación:", err);
+      setError(err.message || "Autenticación fallida");
     } finally {
       setLoading(false);
     }
@@ -49,21 +61,21 @@ export function LoginPage() {
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 shadow-2xl">
           <div className="flex gap-2 mb-6 p-1 bg-black rounded-lg">
             <button
-              onClick={() => setMode('signin')}
+              onClick={() => setMode("signin")}
               className={`flex-1 py-2 rounded-lg text-sm transition-colors ${
-                mode === 'signin'
-                  ? 'bg-white text-black'
-                  : 'text-gray-400 hover:text-white'
+                mode === "signin"
+                  ? "bg-white text-black"
+                  : "text-gray-400 hover:text-white"
               }`}
             >
               Iniciar Sesión
             </button>
             <button
-              onClick={() => setMode('signup')}
+              onClick={() => setMode("signup")}
               className={`flex-1 py-2 rounded-lg text-sm transition-colors ${
-                mode === 'signup'
-                  ? 'bg-white text-black'
-                  : 'text-gray-400 hover:text-white'
+                mode === "signup"
+                  ? "bg-white text-black"
+                  : "text-gray-400 hover:text-white"
               }`}
             >
               Crear Cuenta
@@ -71,7 +83,7 @@ export function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {mode === 'signup' && (
+            {mode === "signup" && (
               <div>
                 <label className="block text-sm text-gray-400 mb-2">
                   Nombre Completo
@@ -87,14 +99,12 @@ export function LoginPage() {
               </div>
             )}
 
-            {mode === 'signup' && (
+            {mode === "signup" && (
               <div>
-                <label className="block text-sm text-gray-400 mb-2">
-                  Rol
-                </label>
+                <label className="block text-sm text-gray-400 mb-2">Rol</label>
                 <select
                   value={role}
-                  onChange={(e) => setRole(e.target.value as 'admin' | 'employee')}
+                  onChange={(e) => setRole(e.target.value as UserRole)}
                   className="w-full px-4 py-3 bg-black border border-gray-800 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-gray-600"
                 >
                   <option value="admin">Administrador</option>
@@ -149,7 +159,7 @@ export function LoginPage() {
                   <span>Procesando...</span>
                 </>
               ) : (
-                <span>{mode === 'signin' ? 'Acceder' : 'Crear Cuenta'}</span>
+                <span>{mode === "signin" ? "Acceder" : "Crear Cuenta"}</span>
               )}
             </button>
           </form>
@@ -163,3 +173,5 @@ export function LoginPage() {
     </div>
   );
 }
+
+

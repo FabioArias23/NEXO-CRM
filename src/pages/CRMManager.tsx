@@ -4,8 +4,9 @@ import {
   Filter, ChevronDown, ChevronRight, MoreHorizontal,
   Settings, Trash2, CheckCircle2, Circle
 } from 'lucide-react';
+import crmMockData from '../data/mocks/crm.json';
 
-// --- 1. CONFIGURACIÓN Y TIPOS ---
+
 
 type StatusType = 'Nuevo' | 'Contactar Luego' | 'En Proceso' | 'Cerrado Ganado' | 'Cerrado Perdido';
 
@@ -25,7 +26,7 @@ interface View {
   filter?: string; // Para lógica futura
 }
 
-// Configuración de Estilos de Status (Badge System)
+
 const STATUS_CONFIG: Record<StatusType, { color: string, dot: string }> = {
   'Nuevo': { color: 'bg-blue-500/15 text-blue-400 border-blue-500/30', dot: 'bg-blue-500' },
   'Contactar Luego': { color: 'bg-purple-500/15 text-purple-400 border-purple-500/30', dot: 'bg-purple-500' },
@@ -34,36 +35,27 @@ const STATUS_CONFIG: Record<StatusType, { color: string, dot: string }> = {
   'Cerrado Perdido': { color: 'bg-red-500/15 text-red-400 border-red-500/30', dot: 'bg-red-500' },
 };
 
-// Datos Iniciales (Mock)
-const INITIAL_DATA: Record[] = [
-  { id: 1, fecha: '2024-12-01', cliente: 'Tech Solutions SA', contacto: 'Juan Pérez', telefono: '+54 9 11 1234 5678', status: 'Nuevo' },
-  { id: 2, fecha: '2024-12-02', cliente: 'Logística Norte', contacto: 'María Gonzalez', telefono: '+54 9 11 8765 4321', status: 'Contactar Luego' },
-  { id: 3, fecha: '2024-12-03', cliente: 'Consultora Integral', contacto: 'Carlos Ruiz', telefono: '+54 9 11 1111 2222', status: 'Nuevo' },
-  { id: 4, fecha: '2024-12-04', cliente: 'Agro Export', contacto: 'Ana Silva', telefono: '+54 9 11 3333 4444', status: 'Cerrado Ganado' },
-  { id: 5, fecha: '2024-12-05', cliente: 'Innovación Web', contacto: 'Pedro Diaz', telefono: '+54 9 11 5555 6666', status: 'En Proceso' },
-];
 
-// --- 2. COMPONENTE PRINCIPAL ---
 
 export default function CRMManager() {
-  // --- ESTADOS ---
-  // Estado de Datos (Fuente de la verdad)
+
+
   const [records, setRecords] = useState<Record[]>(INITIAL_DATA);
   
-  // Estado de Vistas (Pestañas)
+
   const [views, setViews] = useState<View[]>([
     { id: 'v1', name: 'Vista General', type: 'grid' },
     { id: 'v2', name: 'Mis Clientes', type: 'grid' }
-  ]);
-  const [activeViewId, setActiveViewId] = useState<string>('v1');
-  
-  // Estado de UI
+export default function CRMManager() {
+
+
+  const [records, setRecords] = useState<Record[]>(crmMockData.records as Record[]);
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
   const [editingId, setEditingId] = useState<number | null>(null); // Para el dropdown de status
 
-  // --- LÓGICA CORE ---
 
-  // 1. Crear Nueva Vista (Requerimiento Crítico)
+
+
   const handleCreateView = () => {
     const newId = `v${Date.now()}`;
     const newViewNumber = views.length + 1;
@@ -77,7 +69,7 @@ export default function CRMManager() {
     setActiveViewId(newId); // Cambiar foco inmediatamente
   };
 
-  // 2. Eliminar Vista
+
   const handleDeleteView = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (views.length === 1) return; // No borrar la última
@@ -86,31 +78,31 @@ export default function CRMManager() {
     if (activeViewId === id) setActiveViewId(newViews[0].id);
   };
 
-  // 3. Actualizar Status (Smart Grouping Trigger)
+
   const handleStatusChange = (id: number, newStatus: StatusType) => {
-    // Al actualizar el estado, React re-ejecutará useMemo, moviendo la fila automáticamente
+
     setRecords(prev => prev.map(record => 
       record.id === id ? { ...record, status: newStatus } : record
     ));
     setEditingId(null); // Cerrar dropdown
   };
 
-  // 4. Agrupación Dinámica (El cerebro de la tabla)
+
   const groupedRecords = useMemo(() => {
     const groups: Record<string, Record[]> = {};
     
-    // Orden de renderizado de grupos deseado
+
     const order: StatusType[] = ['Nuevo', 'En Proceso', 'Contactar Luego', 'Cerrado Ganado', 'Cerrado Perdido'];
     
-    // Inicializar grupos vacíos para mantener el orden visual
+
     order.forEach(status => groups[status] = []);
 
-    // Distribuir registros
+
     records.forEach(record => {
       if (groups[record.status]) {
         groups[record.status].push(record);
       } else {
-        // Fallback por si hay un status raro
+
         if (!groups['Otros']) groups['Otros'] = [];
         groups['Otros'].push(record);
       }
@@ -119,15 +111,15 @@ export default function CRMManager() {
     return groups;
   }, [records]); // Se recalcula cada vez que 'records' cambia
 
-  // --- RENDERIZADO ---
+
 
   return (
     <div className="flex flex-col h-screen bg-[#09090b] text-white font-sans overflow-hidden">
       
-      {/* 1. TOP BAR & TABS NAVIGATION */}
+      {}
       <div className="flex flex-col border-b border-gray-800 bg-black z-20">
         
-        {/* Header Superior */}
+        {}
         <div className="h-14 flex items-center justify-between px-4 border-b border-gray-800">
           <div className="flex items-center gap-2">
             <div className="p-1.5 bg-blue-600 rounded-md">
@@ -150,7 +142,7 @@ export default function CRMManager() {
           </div>
         </div>
 
-        {/* Tab Bar (Scrollable) */}
+        {}
         <div className="flex items-center px-2 h-10 bg-[#09090b] overflow-x-auto no-scrollbar">
           {views.map((view) => (
             <div
@@ -164,7 +156,7 @@ export default function CRMManager() {
               <TableIcon className={`w-3.5 h-3.5 ${activeViewId === view.id ? 'text-blue-400' : ''}`} />
               <span className="text-xs font-medium">{view.name}</span>
               
-              {/* Botón Borrar (Hover) */}
+              {}
               <button 
                 onClick={(e) => handleDeleteView(view.id, e)}
                 className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-red-500/20 hover:text-red-400 rounded transition-all ml-1"
@@ -172,14 +164,14 @@ export default function CRMManager() {
                 <Trash2 className="w-3 h-3" />
               </button>
 
-              {/* Indicador Activo */}
+              {}
               {activeViewId === view.id && (
                 <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-500"></div>
               )}
             </div>
           ))}
 
-          {/* BOTÓN CREAR VISTA (+) */}
+          {}
           <button
             onClick={handleCreateView}
             className="flex items-center gap-1 px-3 py-1 ml-1 text-xs font-medium text-gray-500 hover:text-white hover:bg-gray-800 rounded transition-colors whitespace-nowrap"
@@ -189,7 +181,7 @@ export default function CRMManager() {
         </div>
       </div>
 
-      {/* 2. MAIN TOOLBAR */}
+      {}
       <div className="h-12 border-b border-gray-800 flex items-center px-4 bg-[#09090b] gap-2">
          <ToolbarButton icon={Filter} label="Filtrar" />
          <ToolbarButton icon={Grid3X3} label="Agrupar" active />
@@ -198,7 +190,7 @@ export default function CRMManager() {
          <span className="text-xs text-gray-500">{records.length} registros</span>
       </div>
 
-      {/* 3. DATA GRID (LA TABLA) */}
+      {}
       <div className="flex-1 overflow-auto bg-black custom-scrollbar">
         <table className="w-full border-collapse text-sm table-fixed">
           <thead className="sticky top-0 z-10 bg-[#09090b] text-gray-500 text-xs font-medium uppercase tracking-wider border-b border-gray-800">
@@ -211,7 +203,7 @@ export default function CRMManager() {
                <HeaderCell label="Cliente" width="w-64" />
                <HeaderCell label="Contacto" width="w-48" />
                <HeaderCell label="Teléfono" width="w-40" />
-               <th className="w-full bg-[#09090b]"></th> {/* Spacer */}
+               <th className="w-full bg-[#09090b]"></th> {}
              </tr>
           </thead>
           
@@ -222,7 +214,7 @@ export default function CRMManager() {
 
                 return (
                   <React.Fragment key={statusName}>
-                    {/* GROUP HEADER ROW */}
+                    {}
                     <tr className="bg-[#121214] hover:bg-[#18181b] transition-colors sticky left-0 z-0">
                        <td colSpan={6} className="p-0">
                           <div 
@@ -245,10 +237,10 @@ export default function CRMManager() {
                        </td>
                     </tr>
 
-                    {/* GROUP ROWS */}
+                    {}
                     {!isCollapsed && groupItems.map(row => (
                       <tr key={row.id} className="group hover:bg-[#18181b] transition-colors border-b border-gray-900/50">
-                         {/* Checkbox Col */}
+                         {}
                          <td className="border-r border-gray-800/50 p-0 relative bg-inherit sticky left-0 z-10 text-center">
                             <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity">
                                <input type="checkbox" className="rounded border-gray-700 bg-gray-800 cursor-pointer" />
@@ -256,7 +248,7 @@ export default function CRMManager() {
                             <span className="text-xs text-gray-600 font-mono group-hover:opacity-0">{row.id}</span>
                          </td>
 
-                         {/* Status Cell (Editable) */}
+                         {}
                          <td className="border-r border-gray-800/50 px-3 py-1.5 relative">
                             <div className="relative">
                                <button 
@@ -268,7 +260,7 @@ export default function CRMManager() {
                                   <ChevronDown className="w-3 h-3 text-gray-500 opacity-0 group-hover:opacity-100" />
                                </button>
 
-                               {/* Dropdown Menu para Status */}
+                               {}
                                {editingId === row.id && (
                                  <>
                                    <div className="fixed inset-0 z-40" onClick={() => setEditingId(null)}></div>
@@ -290,18 +282,18 @@ export default function CRMManager() {
                             </div>
                          </td>
 
-                         {/* Data Cells */}
+                         {}
                          <Cell value={row.fecha} font="font-mono text-gray-400" />
                          <Cell value={row.cliente} font="font-medium text-white" />
                          <Cell value={row.contacto} />
                          <Cell value={row.telefono} />
                          
-                         {/* Empty Spacer */}
+                         {}
                          <td></td>
                       </tr>
                     ))}
 
-                    {/* Fila para agregar en grupo (Visual) */}
+                    {}
                     {!isCollapsed && (
                        <tr className="h-8 hover:bg-[#121214] transition-colors">
                           <td className="border-r border-gray-800/30 sticky left-0 bg-[#09090b] z-10"></td>
@@ -324,7 +316,7 @@ export default function CRMManager() {
   );
 }
 
-// --- SUBCOMPONENTES ---
+
 
 function ToolbarButton({ icon: Icon, label, active }: any) {
   return (
@@ -353,3 +345,4 @@ function Cell({ value, font = "text-gray-300" }: { value: string, font?: string 
     </td>
   );
 }
+

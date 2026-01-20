@@ -1,243 +1,271 @@
-import React from 'react';
-
-import { useNavigate } from 'react-router';
-import { 
-  Search, Bell, Plus, Star, Users, Layout, 
-  Grid, ChevronDown, Shield, 
-  FileText, Briefcase, LogOut,
-  Settings, FolderOpen
-} from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from "react-router";
+import {
+  LayoutDashboard,
+  Table2,
+  Columns3,
+  TrendingUp,
+  Users,
+  Shield,
+  FileText,
+  Plus,
+  Clock,
+  ChevronRight,
+} from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function HomeWorkspace() {
   const navigate = useNavigate();
-  const { user, signOut, isAdmin } = useAuth();
+  const { user, isAdmin } = useAuth();
 
   return (
-    <div className="flex h-screen bg-black text-white overflow-hidden font-sans">
-      
-      {/* --- SIDEBAR DEL LOBBY --- */}
-      <aside className="w-64 border-r border-gray-900 flex flex-col bg-black flex-shrink-0">
-        <div className="p-6 flex items-center gap-3 text-white font-bold tracking-wider">
-           <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-             <Shield className="w-5 h-5 text-black" />
-           </div>
-           <span className="text-sm">NEXO CRM</span>
-        </div>
+    <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
+      {/* Hero Section */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-foreground mb-2">
+          Hola, {user?.name?.split(" ")[0] || "Admin"} 👋
+        </h1>
+        <p className="text-muted-foreground">
+          Accede rápidamente a tus bases de trabajo y herramientas
+        </p>
+      </div>
 
-        <div className="px-3 py-2 space-y-1">
-          <SidebarItem icon={Layout} label="Inicio" active />
-          <SidebarItem icon={Star} label="Favoritos" />
-          <SidebarItem icon={Users} label="Compartido conmigo" />
-        </div>
-
-        <div className="my-4 border-t border-gray-900 mx-6"></div>
-
-        {/* Lista de Espacios de Trabajo */}
-        <div className="flex-1 overflow-y-auto px-4">
-          <div className="flex items-center justify-between text-gray-500 mb-3 px-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider">Espacios de trabajo</span>
-            <Plus className="w-4 h-4 cursor-pointer hover:text-white" />
-          </div>
-
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-white py-2 px-2 hover:bg-gray-900 rounded-lg cursor-pointer transition-colors">
-              <ChevronDown className="w-4 h-4 text-gray-500" />
-              <span className="text-sm font-medium">Nexo Consultora</span>
-            </div>
-            {/* Accesos rápidos dentro del sidebar */}
-            <div className="pl-8 space-y-1 border-l border-gray-800 ml-4">
-              <p onClick={() => navigate('/base/dashboard')} className="text-xs text-gray-400 hover:text-white cursor-pointer py-1.5 transition-colors">
-                Principal
-              </p>
-              <p onClick={() => navigate('/base/table')} className="text-xs text-gray-400 hover:text-white cursor-pointer py-1.5 transition-colors">
-                Base Clientes
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer del Sidebar */}
-        <div className="p-4 border-t border-gray-900 space-y-1">
-           {isAdmin && (
-             <button 
-               onClick={() => navigate('/admin/users')}
-               className="w-full flex items-center gap-3 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-900 rounded-lg transition-colors text-sm"
-             >
-               <Settings className="w-4 h-4" /> Gestión Usuarios
-             </button>
-           )}
-           <button 
-             onClick={() => signOut()}
-             className="w-full flex items-center gap-3 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-950/30 rounded-lg transition-colors text-sm"
-           >
-             <LogOut className="w-4 h-4" /> Cerrar Sesión
-           </button>
-        </div>
-      </aside>
-
-      {/* --- ÁREA PRINCIPAL (GRID DE BASES) --- */}
-      <main className="flex-1 flex flex-col min-w-0 bg-black relative">
-        {/* Top Bar Home */}
-        <header className="h-16 border-b border-gray-900 flex items-center justify-between px-8 bg-black/50 backdrop-blur-md sticky top-0 z-10">
-          <div className="flex-1 max-w-xl relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-            <input 
-              type="text" 
-              placeholder="Buscar bases, tablas o personas (Ctrl+K)..." 
-              className="w-full bg-gray-900 border border-gray-800 rounded-full py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-gray-600 focus:bg-gray-800 transition-all placeholder:text-gray-600"
-            />
-          </div>
-          <div className="flex items-center gap-6 ml-4">
-            <Bell className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
-            <div className="flex items-center gap-3 pl-6 border-l border-gray-800">
-              <div className="text-right hidden md:block">
-                <p className="text-xs text-white font-medium">{user?.name}</p>
-                <p className="text-[10px] text-gray-500 uppercase">{isAdmin ? 'Admin' : 'Consultor'}</p>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-white to-gray-400 flex items-center justify-center text-black text-xs font-bold border border-gray-700">
-                {user?.name?.charAt(0) || 'U'}
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <div className="flex-1 overflow-y-auto p-8 animate-in fade-in duration-500">
-          
-          {/* Banner de Bienvenida */}
-          <div className="bg-gradient-to-r from-gray-900 to-black border border-gray-800 rounded-2xl p-8 mb-10 relative overflow-hidden group shadow-2xl">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none"></div>
-            <div className="relative z-10">
-              <h1 className="text-3xl font-bold mb-2 text-white">Hola, {user?.name?.split(' ')[0]}</h1>
-              <p className="text-gray-400 text-sm max-w-xl mb-6">
-                Bienvenido a NEXO ENTERPRISE. Aquí tienes un resumen de tus bases de datos y actividades recientes.
-              </p>
-              <button 
-                onClick={() => navigate('/base/dashboard')}
-                className="bg-white text-black px-5 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-              >
-                Continuar trabajando
-              </button>
-            </div>
-          </div>
-
-          {/* Grid de Bases (Estilo Airtable) */}
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <Grid className="w-4 h-4" /> Bases Activas
+      {/* Main Workspaces Grid */}
+      <div className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-xl font-semibold text-foreground">
+              Espacios de Trabajo
             </h2>
-            <div className="flex gap-2">
-              <button className="text-xs text-gray-500 hover:text-white transition-colors">Recientes</button>
-              <span className="text-gray-700">|</span>
-              <button className="text-xs text-gray-500 hover:text-white transition-colors">Todas</button>
-            </div>
+            <p className="text-sm text-muted-foreground mt-1">
+              Acceso rápido a tus módulos principales
+            </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {/* BASE 1: Principal */}
-            <BaseCard 
-              title="CONSULTORA MF" 
-              subtitle="Dashboard Ejecutivo" 
-              color="bg-blue-600"
-              borderColor="group-hover:border-blue-500/50"
-              icon={<Briefcase className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/dashboard')}
-              starred
-            />
-            
-            {/* BASE 2: Clientes */}
-            <BaseCard 
-              title="BASE CLIENTES" 
-              subtitle="Tabla Maestra" 
-              color="bg-emerald-600"
-              borderColor="group-hover:border-emerald-500/50"
-              icon={<Users className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/table')}
-            />
-            
-            {/* BASE 3: Pipeline */}
-            <BaseCard 
-              title="PIPELINE VENTAS" 
-              subtitle="Kanban View" 
-              color="bg-purple-600"
-              borderColor="group-hover:border-purple-500/50"
-              icon={<Layout className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/kanban')}
-            />
-            
-            {/* BASE 4: Siniestros (Nuevo) */}
-            <BaseCard 
-              title="SINIESTROS" 
-              subtitle="Gestión de Casos" 
-              color="bg-red-600"
-              borderColor="group-hover:border-red-500/50"
-              icon={<Shield className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/table')} 
-            />
-            
-            {/* BASE 5: Pólizas (Nuevo) */}
-             <BaseCard 
-              title="PÓLIZAS 2025" 
-              subtitle="Renovaciones y Altas" 
-              color="bg-orange-500"
-              borderColor="group-hover:border-orange-500/50"
-              icon={<FileText className="w-6 h-6 text-white" />}
-              onClick={() => navigate('/base/table')} 
-            />
+          <Button>
+            <Plus className="mr-2 h-4 w-4" />
+            Nuevo Espacio
+          </Button>
+        </div>
 
-            {/* Crear Nueva Base */}
-            <div className="border border-dashed border-gray-800 rounded-xl h-40 flex flex-col items-center justify-center cursor-pointer hover:border-gray-600 hover:bg-gray-900/30 transition-all group">
-                <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center mb-3 group-hover:bg-gray-800 transition-colors">
-                  <Plus className="w-5 h-5 text-gray-400 group-hover:text-white" />
-                </div>
-                <span className="text-sm text-gray-500 group-hover:text-gray-300 font-medium">Crear nueva base</span>
+        {/* Grid de workspaces usando shadcn/ui cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Dashboard Ejecutivo */}
+          <WorkspaceCard
+            title="Dashboard Ejecutivo"
+            description="Vista general de métricas y KPIs"
+            icon={<LayoutDashboard className="h-5 w-5" />}
+            stats={{ label: "Actualizado", value: "hace 5 min" }}
+            badge={{ label: "Activo", variant: "default" }}
+            onClick={() => navigate("/base/dashboard")}
+          />
+
+          {/* Base Clientes */}
+          <WorkspaceCard
+            title="Base Clientes"
+            description="Gestión de clientes y contactos"
+            icon={<Users className="h-5 w-5" />}
+            stats={{ label: "Registros", value: "1,247" }}
+            badge={{ label: "+23 hoy", variant: "secondary" }}
+            onClick={() => navigate("/base/table")}
+          />
+
+          {/* Pipeline Ventas */}
+          <WorkspaceCard
+            title="Pipeline Ventas"
+            description="Seguimiento de oportunidades"
+            icon={<Columns3 className="h-5 w-5" />}
+            stats={{ label: "En proceso", value: "42" }}
+            badge={{ label: "$2.4M", variant: "default" }}
+            onClick={() => navigate("/base/kanban")}
+          />
+
+          {/* Analytics */}
+          {isAdmin && (
+            <WorkspaceCard
+              title="Analytics"
+              description="Reportes y análisis avanzados"
+              icon={<TrendingUp className="h-5 w-5" />}
+              stats={{ label: "Reportes", value: "12" }}
+              badge={{ label: "Admin", variant: "destructive" }}
+              onClick={() => navigate("/base/analytics")}
+            />
+          )}
+
+          {/* Gestión Usuarios */}
+          {isAdmin && (
+            <WorkspaceCard
+              title="Gestión de Usuarios"
+              description="Administración de permisos"
+              icon={<Shield className="h-5 w-5" />}
+              stats={{ label: "Usuarios", value: "24" }}
+              badge={{ label: "Admin", variant: "destructive" }}
+              onClick={() => navigate("/admin/users")}
+            />
+          )}
+
+          {/* Create New - Empty State */}
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/50 hover:border-primary/30 group cursor-pointer min-h-[180px] flex flex-col">
+            {/* Gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center">
+              <div className="p-3 rounded-xl bg-muted ring-1 ring-border text-muted-foreground transition-transform group-hover:scale-110 duration-300 mb-4">
+                <Plus className="h-6 w-6" />
+              </div>
+              <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                Crear nuevo espacio
+              </p>
             </div>
           </div>
         </div>
-      </main>
+      </div>
+
+      {/* Quick Actions Section */}
+      <div className="border-t pt-8">
+        <h3 className="text-lg font-semibold text-foreground mb-4">
+          Acciones Rápidas
+        </h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <QuickActionButton
+            label="Nueva Oportunidad"
+            icon={<Plus className="h-4 w-4" />}
+            onClick={() => navigate("/base/dashboard")}
+          />
+          <QuickActionButton
+            label="Ver Reportes"
+            icon={<FileText className="h-4 w-4" />}
+            onClick={() => {}}
+          />
+          <QuickActionButton
+            label="Calendario"
+            icon={<Clock className="h-4 w-4" />}
+            onClick={() => {}}
+          />
+          {isAdmin && (
+            <QuickActionButton
+              label="Configuración"
+              icon={<Shield className="h-4 w-4" />}
+              onClick={() => navigate("/admin/users")}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Recent Activity (opcional) */}
+      <div className="mt-8">
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>Actividad Reciente</CardTitle>
+              <Button variant="ghost" size="sm">
+                Ver todo
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              No hay actividad reciente para mostrar
+            </p>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
 
-// Subcomponentes del HomeWorkspace
-
-function SidebarItem({ icon: Icon, label, active }: { icon: any, label: string, active?: boolean }) {
-  return (
-    <div className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-all ${active ? 'bg-gray-900 text-white font-medium' : 'text-gray-400 hover:text-white hover:bg-gray-900/50'}`}>
-      <Icon className="w-4 h-4" />
-      <span className="text-sm">{label}</span>
-    </div>
-  )
+// Componente WorkspaceCard unificado
+interface WorkspaceCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  stats: { label: string; value: string };
+  badge?: {
+    label: string;
+    variant: "default" | "secondary" | "destructive" | "outline";
+  };
+  onClick: () => void;
 }
 
-function BaseCard({ title, subtitle, color, borderColor, icon, starred, onClick }: any) {
+function WorkspaceCard({
+  title,
+  description,
+  icon,
+  stats,
+  badge,
+  onClick,
+}: WorkspaceCardProps) {
   return (
-    <div onClick={onClick} className={`bg-gray-950 border border-gray-900 ${borderColor} rounded-xl overflow-hidden cursor-pointer transition-all hover:shadow-2xl hover:-translate-y-1 group h-40 flex flex-col relative`}>
-       {/* Icono y Header */}
-       <div className="p-5 flex items-start gap-4 h-full relative z-10">
-          <div className={`w-14 h-14 rounded-xl ${color} flex items-center justify-center shadow-lg shrink-0 group-hover:scale-105 transition-transform duration-300`}>
-             {icon}
-          </div>
-          <div className="flex-1 min-w-0 pt-1">
-             <h3 className="text-white font-bold text-base truncate group-hover:text-blue-200 transition-colors">{title}</h3>
-             <p className="text-gray-500 text-xs mt-1.5">{subtitle}</p>
-             
-             <div className="mt-4 flex -space-x-2 overflow-hidden">
-                <div className="inline-block h-6 w-6 rounded-full ring-2 ring-gray-950 bg-gray-800 flex items-center justify-center text-[8px] text-white">MF</div>
-                <div className="inline-block h-6 w-6 rounded-full ring-2 ring-gray-950 bg-gray-700 flex items-center justify-center text-[8px] text-white">LG</div>
-             </div>
-          </div>
-       </div>
-       
-       {/* Estrella Favoritos */}
-       {starred && (
-         <div className="absolute top-4 right-4 text-yellow-500/50 group-hover:text-yellow-400 transition-colors">
-            <Star className="w-4 h-4 fill-current" />
-         </div>
-       )}
+    <div
+      className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/50 hover:border-primary/30 group cursor-pointer min-h-[180px] flex flex-col"
+      onClick={onClick}
+    >
+      {/* Gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-       {/* Barra de color inferior con gradiente */}
-       <div className={`h-1.5 w-full ${color} opacity-80`}></div>
+      <div className="relative z-10 flex justify-between items-start mb-auto">
+        <div className="p-3 rounded-xl bg-primary/10 ring-1 ring-primary/20 text-primary transition-transform group-hover:scale-110 duration-300 shrink-0">
+          {icon}
+        </div>
+        {badge && (
+          <div
+            className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full shrink-0 ${
+              badge.variant === "default"
+                ? "text-emerald-400 bg-emerald-500/10 border border-emerald-500/20"
+                : badge.variant === "secondary"
+                  ? "text-gray-400 bg-gray-500/10 border border-gray-500/20"
+                  : "text-red-400 bg-red-500/10 border border-red-500/20"
+            }`}
+          >
+            {badge.label}
+          </div>
+        )}
+      </div>
+
+      <div className="relative z-10 mt-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h3 className="text-lg font-bold text-card-foreground mb-1 leading-tight group-hover:text-primary transition-colors">
+            {title}
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {description}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between mt-4">
+          <div className="text-xs text-muted-foreground">
+            {stats.label}:{" "}
+            <span className="font-bold text-card-foreground">
+              {stats.value}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
+}
+
+// Componente QuickActionButton
+interface QuickActionButtonProps {
+  label: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+}
+
+function QuickActionButton({ label, icon, onClick }: QuickActionButtonProps) {
+  return (
+    <Button
+      variant="outline"
+      className="justify-start h-auto py-3"
+      onClick={onClick}
+    >
+      <div className="flex items-center gap-2 w-full">
+        <div className="w-8 h-8 rounded-md bg-muted flex items-center justify-center flex-shrink-0">
+          {icon}
+        </div>
+        <span className="text-sm font-medium truncate">{label}</span>
+      </div>
+    </Button>
+  );
 }
